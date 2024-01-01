@@ -8,32 +8,58 @@
             <hr style="width:50%; margin: auto;">
         </div>
     </div>
-    <div class="form-group row mt-1">
-        <input class="form-control border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
-            formControlName="email" placeholder="Email" style="border: 1px solid bottom!important;">
+    <div class="form-group row mt-3">
+        <div class="col-6 text-center">
+            <label><small>Kullanım Amacı</small></label>
+            <select class="form-select form-select-sm border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0" aria-label=".form-select-sm example">
+                <option selected>Seçiniz</option>
+                <option value="1">Hizmet Al</option>
+                <option value="2">Hizmet Ver</option>
+              </select>
+        </div>
+        <div class="col-6 text-center">
+            <label><small>Kullanım Türü</small></label>
+            <select class="form-select form-select-sm border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0" aria-label=".form-select-sm example">
+                <option selected>Seçiniz</option>
+                <option value="1">Şahıs</option>
+                <option value="2">Şirket</option>
+              </select>
+        </div>
     </div>
     <div class="form-group row mt-2">
-        <input class="form-control border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0" type="tel"
-            formControlName="mobilePhone" placeholder="Cep Telefonu" style="border: 1px solid bottom!important;">
+        <div class="col-6">
+            <input class="form-control border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+            formControlName="first_name" placeholder="First Name" style="border: 1px solid bottom!important;">
+        </div>
+        <div class="col-6">
+            <input class="form-control border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+            formControlName="last_name" placeholder="Last Name" style="border: 1px solid bottom!important;">
+        </div>   
+    </div>
+    
+    <div class="form-group row mt-2">
+        <div class="col-6">
+            <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+            type="text" formControlName="email" placeholder="Email">
+        </div>
+        <div class="col-6">
+            <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+            type="number" formControlName="phone" placeholder="Phone">
+        </div>
+        
     </div>
     <div class="form-group row mt-2">
-        <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
-            type="text" formControlName="name" placeholder="İsim">
-    </div>
-    <div class="form-group row mt-2">
-        <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
-            type="text" formControlName="surname" placeholder="Soyisim">
-    </div>
-    <div class="form-group row mt-2">
-        <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+        <div class="col-6">
+            <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
             type="password" formControlName="password" placeholder="{{'Password' | translate}}">
+        </div>
+        <div class="col-6">
+            <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+            type="password" formControlName="password_again" placeholder="{{'Password_Again' | translate}}">
+        </div>
+        
     </div>
-    <div class="form-group row mt-2">
-        <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
-            type="password" formControlName="password2" placeholder="{{'Password_Again' | translate}}">
-    </div>
-
-    <div class="form-group row mt-2">
+    <div class="form-group row mt-4">
         <label class="list-group-item d-flex gap-2">
             <input class="form-check-input flex-shrink-0" formControlName="checkbox1" type="checkbox" value="">
             <span>
@@ -43,12 +69,12 @@
         <label class="list-group-item d-flex gap-2">
             <input class="form-check-input flex-shrink-0" formControlName="checkbox2" type="checkbox" value="">
             <span>
-                <small class="d-block ">Kullanım Koşullarını Okudum Onaylıyorum.</small>
+                <small class="d-block ">Sözleşmeyi Okudum Onaylıyorum.</small>
             </span>
         </label>
     </div>
 
-    <div class="row  mt-2">
+    <div class="row  mt-3">
         <div class="d-grid gap-2 mt-2">
             <button class="button btn btn-danger text-white" style="font-family: 'Pathway Extreme', sans-serif;"
                 type="submit">{{'Register' | translate}}</button>

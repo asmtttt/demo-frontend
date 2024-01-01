@@ -32,7 +32,7 @@ form {
     transition: 0.5s;
 }
 
-.form-control:focus {
+.form-control:focus, .form-select:focus {
     border-radius: 0%;
     border-color: #ecbf2b !important;
     transition: border-color 1s ease-in-out!important;
