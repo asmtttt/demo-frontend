@@ -1,0 +1,32 @@
+<form class="border">
+    <div class="row justify-content-center">
+      <img src="https://i.pinimg.com/originals/82/c6/5b/82c65b9bb0a75026fc4c82a438b4cc9b.jpg" alt="">
+    </div>
+    <div class="form-group row mt-1">
+      <input class="form-control border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+        formControlName="email" placeholder="Email" style="border: 1px solid bottom!important;">
+    </div>
+    <div class="form-group row mt-2">
+      <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+        type="password" formControlName="password" placeholder="Şifre">
+    </div>
+    <div class="form-group row mt-2">
+      <div class="form-check col align-items-center d-flex">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+        <label class="form-check-label small text-dark mt-1" for="flexCheckDefault" style="margin-left:5px;">
+          Beni Hatırla
+        </label>
+      </div>
+      <div class="form-check col align-items-center text-end"><a [routerLink]="['/auth/resetpw']">
+          <span class="display-inline text-dark small" id="forgot_password">Şifremi Unuttum</span></a></div>
+    </div>
+    <div class="row">
+      <div class="d-grid gap-2 mt-2">
+        <button class="button btn btn-danger" type="submit">Giriş Yap</button>
+      </div>
+      <div class="d-grid gap-2 mt-2">
+        <button class="button btn btn-light" type="submit" [routerLink]="['/auth/register']">Henüz Üye Değil
+          Misiniz?</button>
+      </div>
+    </div>
+  </form>

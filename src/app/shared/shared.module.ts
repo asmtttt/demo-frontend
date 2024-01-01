@@ -4,12 +4,14 @@ import { ProdiverLayoutComponent } from './layout/prodiver-layout/prodiver-layou
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { PublicLayoutComponent } from './layout/public-layout/public-layout.component';
 
 
 @NgModule({
   declarations: [
     ProdiverLayoutComponent,
-    NavbarComponent
+    NavbarComponent,
+    PublicLayoutComponent
   ],
   imports: [
     CommonModule,
