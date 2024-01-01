@@ -1,0 +1,57 @@
+<form class="border">
+    <div class="row justify-content-center">
+        <img src="https://i.pinimg.com/originals/82/c6/5b/82c65b9bb0a75026fc4c82a438b4cc9b.jpg" alt="">
+    </div>
+    <div class="row">
+        <div class="text-center">
+            <h3 class="mt-1">{{'Register' | translate}}</h3>
+            <hr style="width:50%; margin: auto;">
+        </div>
+    </div>
+    <div class="form-group row mt-1">
+        <input class="form-control border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+            formControlName="email" placeholder="Email" style="border: 1px solid bottom!important;">
+    </div>
+    <div class="form-group row mt-2">
+        <input class="form-control border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0" type="tel"
+            formControlName="mobilePhone" placeholder="Cep Telefonu" style="border: 1px solid bottom!important;">
+    </div>
+    <div class="form-group row mt-2">
+        <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+            type="text" formControlName="name" placeholder="İsim">
+    </div>
+    <div class="form-group row mt-2">
+        <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+            type="text" formControlName="surname" placeholder="Soyisim">
+    </div>
+    <div class="form-group row mt-2">
+        <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+            type="password" formControlName="password" placeholder="{{'Password' | translate}}">
+    </div>
+    <div class="form-group row mt-2">
+        <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+            type="password" formControlName="password2" placeholder="{{'Password_Again' | translate}}">
+    </div>
+
+    <div class="form-group row mt-2">
+        <label class="list-group-item d-flex gap-2">
+            <input class="form-check-input flex-shrink-0" formControlName="checkbox1" type="checkbox" value="">
+            <span>
+                <small class="d-block">Kullanım Koşullarını Okudum Onaylıyorum.</small>
+            </span>
+        </label>
+        <label class="list-group-item d-flex gap-2">
+            <input class="form-check-input flex-shrink-0" formControlName="checkbox2" type="checkbox" value="">
+            <span>
+                <small class="d-block ">Kullanım Koşullarını Okudum Onaylıyorum.</small>
+            </span>
+        </label>
+    </div>
+
+    <div class="row  mt-2">
+        <div class="d-grid gap-2 mt-2">
+            <button class="button btn btn-danger text-white" style="font-family: 'Pathway Extreme', sans-serif;"
+                type="submit">{{'Register' | translate}}</button>
+        </div>
+    </div>
+</form>

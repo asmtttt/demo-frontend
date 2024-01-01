@@ -1,0 +1,49 @@
+form {
+    border-radius: 20px;
+    box-shadow: 0 0.1rem 0.1rem rgba(35, 36, 37, 0.502);
+    padding: 32px;
+    background-color: white;
+}
+  
+  #forgot_password:hover {
+    color: dodgerblue !important;
+}
+
+.btn-danger {
+    background-color: #ED1C24!important;
+}
+
+.btn-danger:hover {
+    background-color: #d11919!important;
+}
+
+.form-check-input {
+    box-shadow: none!important;
+    width:0.8em!important;
+    height:0.8em!important;
+    border: solid 1.5px #a2a2a2!important;
+    border-radius: 0%!important;
+}
+
+.form-check-input:checked {
+    background-color: #de3535!important;
+    border-color: #de3535;
+    border: solid 1.5px #de3535!important;
+    transition: 0.5s;
+}
+
+.form-control:focus {
+    border-radius: 0%;
+    border-color: #ecbf2b !important;
+    transition: border-color 1s ease-in-out!important;
+    border-width: 2.5px;
+    box-shadow: 0 0 5px rgb(255, 255, 255) !important;
+}
+
+.form-control {
+    transition: none!important;
+}
+  
+img {
+    width: 140px;
+}
