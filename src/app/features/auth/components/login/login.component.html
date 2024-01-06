@@ -1,32 +1,73 @@
-<form class="border">
-    <div class="row justify-content-center">
-      <img src="https://i.pinimg.com/originals/82/c6/5b/82c65b9bb0a75026fc4c82a438b4cc9b.jpg" alt="">
+<!-- Login Yapısı -->
+<form class="border" (ngSubmit)="onLogin()">
+  <div class="row justify-content-center">
+    <img src="https://i.pinimg.com/originals/82/c6/5b/82c65b9bb0a75026fc4c82a438b4cc9b.jpg" alt="">
+  </div>
+  <div class="form-group row mt-1">
+    <input class="form-control border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0" 
+    type="text" style="border: 1px solid bottom!important;"
+    placeholder="Email" id="username" name="username" [(ngModel)]="loginModel.username" class="form-control" required>
+    <small class="required-color" *ngIf="loginModel.username.length === 0">Bu alan boş bırakılamaz!</small>
+  </div>
+  <div class="form-group row mt-2">
+    <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+    type="password" placeholder="Şifre"
+    id="password" name="password" [(ngModel)]="loginModel.password" class="form-control" required>
+    <small class="required-color" *ngIf="loginModel.password.length === 0">Bu alan boş bırakılamaz!</small>
+  </div>
+  <div class="form-group row mt-2">
+    <div class="form-check col align-items-center d-flex">
+      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+      <label class="form-check-label small text-dark mt-1" for="flexCheckDefault" style="margin-left:5px;">
+        Beni Hatırla
+      </label>
     </div>
-    <div class="form-group row mt-1">
-      <input class="form-control border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
-        formControlName="email" placeholder="Email" style="border: 1px solid bottom!important;">
+    <div class="form-check col align-items-center text-end"><a [routerLink]="['/auth/resetPassword']">
+        <span class="display-inline text-dark small" id="forgot_password">Şifremi Unuttum</span></a></div>
+  </div>
+  <div class="row">
+    <div class="d-grid gap-2 mt-2">
+      <button class="button btn btn-danger" type="submit">Giriş Yap</button>
     </div>
-    <div class="form-group row mt-2">
-      <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
-        type="password" formControlName="password" placeholder="Şifre">
+    <div class="d-grid gap-2 mt-2">
+      <button class="button btn btn-light" type="submit" [routerLink]="['/auth/register']">Henüz Üye Değil
+        Misiniz?</button>
     </div>
-    <div class="form-group row mt-2">
-      <div class="form-check col align-items-center d-flex">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label small text-dark mt-1" for="flexCheckDefault" style="margin-left:5px;">
-          Beni Hatırla
-        </label>
+  </div>
+</form>
+
+<button class="btn btn-primary" (click)="openModal()">Modal Aç</button>
+
+
+<!-- Uyarı Modalı Örneği-->
+<div #myModal class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalPopoversLabel">Modal title</h5>
+        <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
       </div>
-      <div class="form-check col align-items-center text-end"><a [routerLink]="['/auth/resetPassword']">
-          <span class="display-inline text-dark small" id="forgot_password">Şifremi Unuttum</span></a></div>
-    </div>
-    <div class="row">
-      <div class="d-grid gap-2 mt-2">
-        <button class="button btn btn-danger" type="submit">Giriş Yap</button>
+      <div class="modal-body">
+        <h5>Popover in a modal</h5>
+        <p>
+          This
+          <a role="button" class="btn btn-secondary popover-test" mdbPopover="Popover body content is set in this attribute."
+            mdbPopoverTitle="Popover title">button</a>
+          triggers a popover on click.
+        </p>
+        <hr />
+        <h5>Tooltips in a modal</h5>
+        <p>
+          <a href="#!" class="tooltip-test" mdbTooltip="Tooltip">This link</a>
+          and
+          <a href="#!" class="tooltip-test" mdbTooltip="Tooltip">that link</a>
+          have tooltips on hover.
+        </p>
       </div>
-      <div class="d-grid gap-2 mt-2">
-        <button class="button btn btn-light" type="submit" [routerLink]="['/auth/register']">Henüz Üye Değil
-          Misiniz?</button>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
-  </form>
+  </div>
+</div>

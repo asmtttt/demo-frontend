@@ -1,11 +1,9 @@
 #bg-image {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1756&q=80');
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/images/login-background-photo.jpeg');
     background-size: cover;
-    /* <------ */
     background-repeat: no-repeat;
     background-position: center center;
 }
-
 .half,
 .half .container>.row {
     min-height:100vh;

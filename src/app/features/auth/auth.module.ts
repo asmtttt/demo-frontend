@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './components/register/register.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -22,7 +23,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    TranslateModule
+    TranslateModule,
+    FormsModule
   ]
 })
 export class AuthModule { }

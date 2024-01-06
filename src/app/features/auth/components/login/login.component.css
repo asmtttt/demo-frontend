@@ -47,3 +47,7 @@ form {
 img {
     width: 140px;
 }
+
+.required-color {
+    color: #de3535;
+}
