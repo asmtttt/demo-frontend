@@ -6,38 +6,68 @@
   <div class="form-group row mt-1">
     <input class="form-control border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0" 
     type="text" style="border: 1px solid bottom!important;"
-    placeholder="Email" id="username" name="username" [(ngModel)]="loginModel.username" class="form-control" required>
-    <small class="required-color" *ngIf="loginModel.username.length === 0">Bu alan boş bırakılamaz!</small>
+    placeholder="{{ 'EMAIL' | translate }}" id="username" name="username" [(ngModel)]="loginModel.username" class="form-control" required>
+    <small class="required-color" *ngIf="loginModel.username.length === 0">{{ 'REQUIRED_INPUT' | translate }}</small>
   </div>
   <div class="form-group row mt-2">
     <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
-    type="password" placeholder="Şifre"
+    type="password" placeholder="{{ 'PASSWORD' | translate }}"
     id="password" name="password" [(ngModel)]="loginModel.password" class="form-control" required>
-    <small class="required-color" *ngIf="loginModel.password.length === 0">Bu alan boş bırakılamaz!</small>
+    <small class="required-color" *ngIf="loginModel.password.length === 0">{{ 'REQUIRED_INPUT' | translate }}</small>
   </div>
   <div class="form-group row mt-2">
     <div class="form-check col align-items-center d-flex">
       <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
       <label class="form-check-label small text-dark mt-1" for="flexCheckDefault" style="margin-left:5px;">
-        Beni Hatırla
-      </label>
+        {{ 'REMEMBER_ME' | translate }}
+      </label> 
     </div>
     <div class="form-check col align-items-center text-end"><a [routerLink]="['/auth/resetPassword']">
-        <span class="display-inline text-dark small" id="forgot_password">Şifremi Unuttum</span></a></div>
+        <span class="display-inline text-dark small" id="forgot_password">{{ 'FORGOT_PASSWORD' | translate }}</span></a></div>
   </div>
-  <div class="row">
+  <div class="form-group row mt-2">
     <div class="d-grid gap-2 mt-2">
-      <button class="button btn btn-danger" type="submit">Giriş Yap</button>
+      <button class="button btn btn-danger" type="submit">{{ 'LOGIN' | translate }}</button>
     </div>
     <div class="d-grid gap-2 mt-2">
-      <button class="button btn btn-light" type="submit" [routerLink]="['/auth/register']">Henüz Üye Değil
-        Misiniz?</button>
+      <button class="button btn btn-light" type="submit" [routerLink]="['/auth/register']">{{ 'NOT_A_REMEMBER_YET' | translate }}</button>
+    </div>
+  </div>
+  <div class="form-group row mt-2">
+    <div class="col-6 align-items-center btn btn-light language" [ngClass]="{
+      'language-background-red':currentLanguage === 'tr',
+      'language-background-white':currentLanguage === 'en'}" (click)="changeLanguage('tr')">
+      <img style="width: auto; height: auto;" src="assets/images/languages-flag/tr.svg" alt="{{ 'TURKISH' | translate }}" class="flag-icon">
+      &nbsp;<small>{{ 'TURKISH' | translate }}</small>
+    </div>
+    <div class="col-6 align-items-center btn btn-light language" [ngClass]="{
+      'language-background-red':currentLanguage === 'en',
+      'language-background-white':currentLanguage === 'tr'}" (click)="changeLanguage('en')">
+      <img style="width: auto; height: auto;" src="assets/images/languages-flag/gb-eng.svg" alt="{{ 'ENGLISH' | translate }}" class="flag-icon">
+      &nbsp;<small>{{ 'ENGLISH' | translate }}</small>
     </div>
   </div>
 </form>
 
-<button class="btn btn-primary" (click)="openModal()">Modal Aç</button>
-
+<!-- Modal Kullanımı ve Language Dropdown Örneği -->
+<div class="d-grid gap-2 mt-2">
+  <div class="row">
+    <div class="col-4">
+      <button class="btn btn-primary" (click)="openModal()">Modal Aç</button>
+    </div>
+    <div class="col-4">
+      <div class="dropdown">
+        <button class="btn btn-light language dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          Language
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+          <li><a class="dropdown-item" href="#"><img style="width: auto; height: auto;" src="assets/images/languages-flag/tr.svg" alt="Türkçe" class="flag-icon"> Türkçe</a></li>
+          <li><a class="dropdown-item" href="#"><img style="width: auto; height: auto;" src="assets/images/languages-flag/gb-eng.svg" alt="English" class="flag-icon"> English</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Uyarı Modalı Örneği-->
 <div #myModal class="modal" tabindex="-1" role="dialog">

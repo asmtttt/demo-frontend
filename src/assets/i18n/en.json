@@ -1,3 +1,15 @@
 {
-    "Home":"Home"
+    "HOME":"Home",
+    "EMAIL":"Email",
+    "PASSWORD":"Password",
+    "REMEMBER_ME":"Remember Me",
+    "FORGOT_PASSWORD":"Forgot Password",
+    "LOGIN":"Login",
+    "NOT_A_REMEMBER_YET":"Not a Remember Yet?",
+    "LANGUAGE":"Language",
+    "REQUIRED_INPUT":"This field cannot be left blank!",
+    "TURKISH":"Turkish",
+    "ENGLISH":"English",
+    "COPYRIGHT": "Copyright © 2023 - ∞ All Rights Reserved."
+
 }

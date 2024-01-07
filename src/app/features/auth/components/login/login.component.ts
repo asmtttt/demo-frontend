@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { LoginModel } from '../../models/login-request-model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -9,11 +10,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class LoginComponent {  
 
-  constructor(private modalService: NgbModal) {}
+  constructor(private modalService: NgbModal, private translateService: TranslateService) {}
 
   loginModel: LoginModel = { username: '', password: '' };
   @ViewChild('myModal')
   myModal!: ElementRef;
+
+  currentLanguage: string = "tr";
 
   onLogin() {
     console.log('Login Model: ', this.loginModel);
@@ -26,5 +29,10 @@ export class LoginComponent {
 
   closeModal() {
     this.myModal.nativeElement.style.display = 'none';
+  }
+
+  changeLanguage(lang: string): void {
+    this.translateService.use(lang);
+    this.currentLanguage = lang;
   }
 }

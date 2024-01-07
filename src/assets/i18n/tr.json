@@ -1,3 +1,14 @@
 {
-    "Home":"Anasayfa"
+    "HOME":"Anasayfa",
+    "EMAIL":"Email",
+    "PASSWORD":"Şifre",
+    "REMEMBER_ME":"Beni Hatırla",
+    "FORGOT_PASSWORD":"Şifremi Unuttum",
+    "LOGIN":"Giriş Yap",
+    "NOT_A_REMEMBER_YET":"Henüz Üye Değil Misiniz?",
+    "LANGUAGE":"Dil",
+    "REQUIRED_INPUT":"Bu alan boş bırakılamaz!",
+    "TURKISH":"Türkçe",
+    "ENGLISH":"İngilizce",
+    "COPYRIGHT": "Copyright © 2023 - ∞ Tüm Hakları Saklıdır."
 }
