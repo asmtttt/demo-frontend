@@ -10,5 +10,10 @@
     "REQUIRED_INPUT":"Bu alan boş bırakılamaz!",
     "TURKISH":"Türkçe",
     "ENGLISH":"İngilizce",
-    "COPYRIGHT": "Copyright © 2023 - ∞ Tüm Hakları Saklıdır."
+    "COPYRIGHT": "Copyright © 2023 - ∞ Tüm Hakları Saklıdır.",
+    "REGISTER": "Üye Ol",
+    "FIRST_NAME": "Ad",
+    "LAST_NAME": "Soyad",
+    "PHONE": "Telefon",
+    "SIGNUP": "Kayıt Ol" 
 }

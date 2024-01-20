@@ -10,6 +10,10 @@
     "REQUIRED_INPUT":"This field cannot be left blank!",
     "TURKISH":"Turkish",
     "ENGLISH":"English",
-    "COPYRIGHT": "Copyright © 2023 - ∞ All Rights Reserved."
-
+    "COPYRIGHT": "Copyright © 2023 - ∞ All Rights Reserved.",
+    "REGISTER": "Register",
+    "FIRST_NAME": "First Name",
+    "LAST_NAME": "Last Name",
+    "PHONE": "Phone",
+    "SIGNUP": "Sign Up" 
 }

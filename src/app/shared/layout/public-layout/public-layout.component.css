@@ -10,9 +10,12 @@
 }
 
 
-.half .contents,
+.half .contents
+{
+    width: 60%;
+}
 .half .bg {
-    width: 50%;
+    width: 40%;
 }
 
 @media (max-width: 1199.98px) {

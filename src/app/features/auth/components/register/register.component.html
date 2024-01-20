@@ -1,7 +1,7 @@
-<form class="border">
-    <div class="row justify-content-center">
+<form class=" " (ngSubmit)="onRegister()">
+    <!-- <div class="row justify-content-center">
         <img src="https://i.pinimg.com/originals/82/c6/5b/82c65b9bb0a75026fc4c82a438b4cc9b.jpg" alt="">
-    </div>
+    </div> -->
     <div class="row">
         <div class="text-center">
             <h3 class="mt-1">{{'Register' | translate}}</h3>
@@ -9,78 +9,116 @@
         </div>
     </div>
     <div class="form-group row mt-3">
-        <div class="col-6 text-center">
+        <!-- <div class="col-6 text-center">
             <label><small>Kullanım Amacı</small></label>
             <select class="form-select form-select-sm border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0" aria-label=".form-select-sm example">
                 <option selected>Seçiniz</option>
                 <option value="1">Hizmet Al</option>
                 <option value="2">Hizmet Ver</option>
               </select>
-        </div>
-        <div class="col-6 text-center">
-            <label><small>Kullanım Türü</small></label>
-            <select class="form-select form-select-sm border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0" aria-label=".form-select-sm example">
-                <option selected>Seçiniz</option>
-                <option value="1">Şahıs</option>
-                <option value="2">Şirket</option>
-              </select>
-        </div>
-    </div>
-    <div class="form-group row mt-2">
-        <div class="col-6">
-            <input class="form-control border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
-            formControlName="first_name" placeholder="First Name" style="border: 1px solid bottom!important;">
-        </div>
-        <div class="col-6">
-            <input class="form-control border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
-            formControlName="last_name" placeholder="Last Name" style="border: 1px solid bottom!important;">
-        </div>   
-    </div>
-    
-    <div class="form-group row mt-2">
-        <div class="col-6">
-            <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
-            type="text" formControlName="email" placeholder="Email">
-        </div>
-        <div class="col-6">
-            <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
-            type="number" formControlName="phone" placeholder="Phone">
-        </div>
-        
-    </div>
-    <div class="form-group row mt-2">
-        <div class="col-6">
-            <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
-            type="password" formControlName="password" placeholder="{{'Password' | translate}}">
-        </div>
-        <div class="col-6">
-            <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
-            type="password" formControlName="password_again" placeholder="{{'Password_Again' | translate}}">
-        </div>
-        
-    </div>
-    <div class="form-group row mt-4">
-        <label class="list-group-item d-flex gap-2">
-            <input class="form-check-input flex-shrink-0" formControlName="checkbox1" type="checkbox" value="">
-            <span>
-                <small class="d-block">Kullanım Koşullarını Okudum Onaylıyorum.</small>
-            </span>
-        </label>
-        <label class="list-group-item d-flex gap-2">
-            <input class="form-check-input flex-shrink-0" formControlName="checkbox2" type="checkbox" value="">
-            <span>
-                <small class="d-block ">Sözleşmeyi Okudum Onaylıyorum.</small>
-            </span>
-        </label>
-    </div>
+        </div> -->
 
-    <div class="row  mt-3">
-        <div class="d-grid gap-2 mt-2">
-            <button class="button btn btn-danger text-white" style="font-family: 'Pathway Extreme', sans-serif;"
-                type="submit">{{'Register' | translate}}</button>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-6">
+                    <label><small>Kullanım Amacı</small></label>
+                    <select class="form-select form-select-sm border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0" 
+                            aria-label=".form-select-sm usagePurpose"
+                            id="usagePurpose" name="usagePurpose" 
+                            [(ngModel)]="registerModel.usagePurpose" 
+                            required>
+                        <option selected disabled value="">Seçiniz</option>
+                        <option value="1">Hizmet Al</option>
+                        <option value="2">Hizmet Ver</option>
+                    </select>
+                    <small class="required-color" *ngIf="!registerModel.usagePurpose">{{ 'REQUIRED_INPUT' | translate }}</small>
+                </div>
+                <div class="col-6">
+                    <label><small>Kullanım Türü</small></label>
+                    <select class="form-select form-select-sm border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0" 
+                            aria-label=".form-select-sm usageType"
+                            id="usageType" name="usageType" 
+                            [(ngModel)]="registerModel.usageType" 
+                            required>
+                        <option selected disabled value="">Seçiniz</option>
+                        <option value="1">Şahıs</option>
+                        <option value="2">Şirket</option>
+                    </select>
+                    <small class="required-color" *ngIf="!registerModel.usageType">{{ 'REQUIRED_INPUT' | translate }}</small>
+                </div>
+                <div class="col-6">
+                    <label><small>Name:</small></label>
+                    <input class="form-control border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+                    type="text" style="border: 1px solid bottom!important;"
+                    placeholder="{{ 'FIRST_NAME' | translate }}" id="firstName" name="firstName" [(ngModel)]="registerModel.firstName" 
+                    class="form-control" required>
+                    <small class="required-color" *ngIf="registerModel.firstName.length === 0">{{ 'REQUIRED_INPUT' | translate }}</small>
+                </div>
+                <div class="col-6">
+                    <label><small>Surname:</small></label>
+                    <input class="form-control border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+                    type="text" style="border: 1px solid bottom!important;"
+                    placeholder="{{ 'LAST_NAME' | translate }}" id="lastName" name="lastName" [(ngModel)]="registerModel.lastName"
+                    class="form-control" required> 
+                    <small class="required-color" *ngIf="registerModel.lastName.length === 0">{{ 'REQUIRED_INPUT' | translate }}</small>
+                </div>
+                <div class="col-6">
+                    <label><small>Email:</small></label>
+                    <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+                    type="text" style="border: 1px solid bottom!important;"
+                    placeholder="{{ 'EMAIL' | translate }}" id="email" name="email" [(ngModel)]="registerModel.email"
+                    class="form-control" required>
+                    <small class="required-color" *ngIf="registerModel.email.length === 0">{{ 'REQUIRED_INPUT' | translate }}</small>
+                </div>
+                <div class="col-6">
+                    <label><small>Phone:</small></label>
+                    <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+                    type="text" style="border: 1px solid bottom!important;"
+                    placeholder="{{ 'PHONE' | translate }}" id="email" name="phone" [(ngModel)]="registerModel.phone"
+                    class="form-control" required>
+                    <small class="required-color" *ngIf="registerModel.phone.length === 0">{{ 'REQUIRED_INPUT' | translate }}</small>
+                </div>
+                <div class="col-6">
+                    <label><small>Password:</small></label>
+                    <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+                    type="password" style="border: 1px solid bottom!important;"
+                    placeholder="{{ 'PASSWORD' | translate }}" id="password" name="password" [(ngModel)]="registerModel.password"
+                    class="form-control" required>
+                    <small class="required-color" *ngIf="registerModel.password.length === 0">{{ 'REQUIRED_INPUT' | translate }}</small>
+                </div>
+                <div class="col-6">
+                    <label><small>Password Again:</small></label>
+                    <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+                    type="password" style="border: 1px solid bottom!important;"
+                    placeholder="{{ 'PASSWORD' | translate }}" id="password-again" name="password" [(ngModel)]="registerModel.passwordAgain"
+                    class="form-control" required>
+                    <small class="required-color" *ngIf="registerModel.passwordAgain.length === 0">{{ 'REQUIRED_INPUT' | translate }}</small>
+                </div>
+                <div class="col-6">
+                    <label class="list-group-item d-flex gap-2">
+                        <input class="form-check form-check-input flex-shrink-0 form-control" type="checkbox" [checked]="registerModel.isUsageRulesApproved" 
+                        (change)="onUsageRulesCheckboxChange()" [(ngModel)]="registerModel.isUsageRulesApproved" value="">
+                        <span>
+                            <small class="d-block">Kullanım Koşullarını Okudum Onaylıyorum.</small>
+                        </span>
+                    </label>
+                </div>
+                <div class="col-6">
+                    <label class="list-group-item d-flex gap-2">
+                        <input class="form-check form-check-input flex-shrink-0 form-control" type="checkbox" [checked]="registerModel.isContractApproved" 
+                        (change)="onContractCheckboxChange()" [(ngModel)]="registerModel.isContractApproved" value="">
+                        <span>
+                            <small class="d-block">Sözleşmeyi Okudum Onaylıyorum.</small>
+                        </span>
+                    </label>
+                </div>
+            </div>
+            
         </div>
-        <div class="d-grid gap-2 mt-2">
-            <button class="button btn btn-light" type="submit" [routerLink]="['/auth/login']">Giriş Sayfasına Dön</button>
-          </div>
     </div>
+    <div class="form-group row mt-3 text-center">
+        <div class="d-grid gap-2 mt-3">
+            <button class="button btn btn-danger align-items-center" type="submit">{{ 'SIGNUP' | translate }}</button>
+        </div>
+    </div> 
 </form>
