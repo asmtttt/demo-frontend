@@ -13,4 +13,5 @@ export interface RegisterModel {
     birthDate?: string;
     countryCode?: string;
     gsm?: string;
+    [key: string]: string | boolean | undefined;
   }

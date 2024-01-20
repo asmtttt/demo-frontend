@@ -16,9 +16,25 @@ export class LoginComponent {
   myModal!: ElementRef;
 
   currentLanguage: string = "tr";
+  showEmptyFields = false;
 
   onLogin() {
     console.log('Login Model: ', this.loginModel);
+    var emptyFields = this.getEmptyFields();
+
+    if (emptyFields.length != 0 && emptyFields.length > 0 ) {
+      this.showEmptyFields = true;
+      console.log(emptyFields);
+      
+      console.log(this.showEmptyFields);
+      
+    }
+    else {
+      this.showEmptyFields = false;
+      console.log(emptyFields);
+      console.log(this.showEmptyFields);
+      // bu kısımda login servisine istek atılacaktır.
+    }
   }
 
 
@@ -33,5 +49,19 @@ export class LoginComponent {
   changeLanguage(lang: string): void {
     this.translateService.use(lang);
     this.currentLanguage = lang;
+  }
+
+  getEmptyFields() {
+    var emptyFields: any = [];
+
+    for (var key in this.loginModel) {
+      if (this.loginModel.hasOwnProperty(key)) {
+        var value = this.loginModel[key];
+        if (value === '' || value === false) {
+          emptyFields.push(key);
+        }
+      }
+    }
+    return emptyFields;
   }
 }

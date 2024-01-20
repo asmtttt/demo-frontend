@@ -2,6 +2,7 @@
     "HOME":"Home",
     "EMAIL":"Email",
     "PASSWORD":"Password",
+    "PASSWORD_AGAIN":"Password Again",
     "REMEMBER_ME":"Remember Me",
     "FORGOT_PASSWORD":"Forgot Password",
     "LOGIN":"Login",
@@ -15,5 +16,11 @@
     "FIRST_NAME": "First Name",
     "LAST_NAME": "Last Name",
     "PHONE": "Phone",
-    "SIGNUP": "Sign Up" 
+    "SIGNUP": "Sign Up",
+    "RETURN_LOGIN": "Return to Login",
+    "USAGE_PURPOSE": "Usage Purpose",
+    "CHOOSE": "Choose",
+    "USAGE_TYPE": "Usage Type",
+    "USAGE_RULES_TITLE": "I have read and agree to the terms of use.",
+    "CONTRACT_CONFIRM_TITLE": "I have read and agree to the terms and conditions."
 }

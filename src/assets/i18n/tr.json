@@ -2,6 +2,7 @@
     "HOME":"Anasayfa",
     "EMAIL":"Email",
     "PASSWORD":"Şifre",
+    "PASSWORD_AGAIN":"Şifre (Tekrar)",
     "REMEMBER_ME":"Beni Hatırla",
     "FORGOT_PASSWORD":"Şifremi Unuttum",
     "LOGIN":"Giriş Yap",
@@ -15,5 +16,11 @@
     "FIRST_NAME": "Ad",
     "LAST_NAME": "Soyad",
     "PHONE": "Telefon",
-    "SIGNUP": "Kayıt Ol" 
+    "SIGNUP": "Kayıt Ol",
+    "RETURN_LOGIN": "Girişe Dön",
+    "USAGE_PURPOSE": "Kullanım Amacı",
+    "CHOOSE": "Seçiniz",
+    "USAGE_TYPE": "Kullanım Türü",
+    "USAGE_RULES_TITLE": "Kullanım Koşullarını Okudum Onaylıyorum.",
+    "CONTRACT_CONFIRM_TITLE": "Sözleşmeyi Okudum Onaylıyorum."
 }
