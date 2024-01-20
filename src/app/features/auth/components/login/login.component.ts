@@ -1,6 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { LoginModel } from '../../models/login-request-model';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -10,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class LoginComponent {  
 
-  constructor(private modalService: NgbModal, private translateService: TranslateService) {}
+  constructor(private translateService: TranslateService) {}
 
   loginModel: LoginModel = { username: '', password: '' };
   @ViewChild('myModal')
