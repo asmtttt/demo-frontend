@@ -1,4 +1,4 @@
-<form class=" " (ngSubmit)="onRegister()">
+<form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
     <!-- <div class="row justify-content-center">
         <img src="https://i.pinimg.com/originals/82/c6/5b/82c65b9bb0a75026fc4c82a438b4cc9b.jpg" alt="">
     </div> -->
@@ -13,101 +13,122 @@
             <div class="row">
                 <div class="col-6">
                     <label style="margin-top: 5%;"><small>{{'USAGE_PURPOSE' | translate}}</small></label>
-                    <select class="form-select form-select-sm border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0" 
-                            aria-label=".form-select-sm usagePurpose"
-                            id="usagePurpose" name="usagePurpose" 
-                            [(ngModel)]="registerModel.usagePurpose" 
-                            required>
+                    <select
+                        class="form-select form-select-sm border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+                        aria-label=".form-select-sm usagePurpose" id="usagePurpose" name="usagePurpose"
+                        formControlName="usagePurpose">
                         <option selected disabled value="">{{'CHOOSE' | translate}}</option>
                         <option value="1">Hizmet Al</option>
                         <option value="2">Hizmet Ver</option>
                     </select>
-                    <small class="required-color" *ngIf="!registerModel.usagePurpose" [hidden]="!showEmptyFields">{{ 'REQUIRED_INPUT' | translate }}</small>
+                    <small class="required-color"
+                        *ngIf="showError && (signUpForm.controls.usagePurpose.invalid || signUpForm.controls.usagePurpose.errors?.required)">{{
+                        'REQUIRED_INPUT' | translate }}</small>
                 </div>
                 <div class="col-6">
                     <label style="margin-top: 5%;"><small>{{'USAGE_TYPE' | translate}}</small></label>
-                    <select class="form-select form-select-sm border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0" 
-                            aria-label=".form-select-sm usageType"
-                            id="usageType" name="usageType" 
-                            [(ngModel)]="registerModel.usageType" 
-                            required>
+                    <select
+                        class="form-select form-select-sm border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+                        aria-label=".form-select-sm usageType" id="usageType" name="usageType"
+                        formControlName="usageType">
                         <option selected disabled value="">{{'CHOOSE' | translate}}</option>
                         <option value="1">Şahıs</option>
                         <option value="2">Şirket</option>
                     </select>
-                    <small class="required-color" *ngIf="!registerModel.usageType" [hidden]="!showEmptyFields">{{ 'REQUIRED_INPUT' | translate }}</small>
+                    <small class="required-color"
+                        *ngIf="showError && (signUpForm.controls.usageType.invalid || signUpForm.controls.usageType.errors?.required)">{{
+                        'REQUIRED_INPUT' | translate }}</small>
                 </div>
                 <div class="col-6">
-                    <label style="margin-top: 5%;"><small>{{'FIRST_NAME' | translate}}:</small></label>
+                    <label style="margin-top: 5%;"><small>{{'FIRST_NAME' | translate}}</small></label>
                     <input class="form-control border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
-                    type="text" style="border: 1px solid bottom!important;"
-                    placeholder="{{ 'FIRST_NAME' | translate }}" id="firstName" name="firstName" [(ngModel)]="registerModel.firstName" 
-                    class="form-control" required>
-                    <small class="required-color" *ngIf="registerModel.firstName.length === 0" [hidden]="!showEmptyFields">{{ 'REQUIRED_INPUT' | translate }}</small>
+                        type="text" style="border: 1px solid bottom!important;"
+                        placeholder="{{ 'FIRST_NAME' | translate }}" id="firstName" name="firstName"
+                        formControlName="firstName" class="form-control">
+                    <small class="required-color"
+                        *ngIf="showError && (signUpForm.controls.firstName.invalid || signUpForm.controls.firstName.errors?.required)">{{
+                        'REQUIRED_INPUT' | translate }}</small>
                 </div>
                 <div class="col-6">
-                    <label style="margin-top: 5%;"><small>{{'LAST_NAME' | translate}}:</small></label>
+                    <label style="margin-top: 5%;"><small>{{'LAST_NAME' | translate}}</small></label>
                     <input class="form-control border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
-                    type="text" style="border: 1px solid bottom!important;"
-                    placeholder="{{ 'LAST_NAME' | translate }}" id="lastName" name="lastName" [(ngModel)]="registerModel.lastName"
-                    class="form-control" required> 
-                    <small class="required-color" *ngIf="registerModel.lastName.length === 0" [hidden]="!showEmptyFields">{{ 'REQUIRED_INPUT' | translate }}</small>
+                        type="text" style="border: 1px solid bottom!important;"
+                        placeholder="{{ 'LAST_NAME' | translate }}" id="lastName" name="lastName"
+                        formControlName="lastName" class="form-control">
+                    <small class="required-color"
+                        *ngIf="showError && (signUpForm.controls.lastName.invalid || signUpForm.controls.lastName.errors?.required)">{{
+                        'REQUIRED_INPUT' | translate }}</small>
                 </div>
                 <div class="col-6">
-                    <label style="margin-top: 5%;"><small>{{'EMAIL' | translate}}:</small></label>
-                    <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
-                    type="text" style="border: 1px solid bottom!important;"
-                    placeholder="{{ 'EMAIL' | translate }}" id="email" name="email" [(ngModel)]="registerModel.email"
-                    class="form-control" required>
-                    <small class="required-color" *ngIf="registerModel.email.length === 0" [hidden]="!showEmptyFields">{{ 'REQUIRED_INPUT' | translate }}</small>
+                    <label style="margin-top: 5%;"><small>{{'EMAIL' | translate}}</small></label>
+                    <input
+                        class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+                        type="text" style="border: 1px solid bottom!important;" placeholder="{{ 'EMAIL' | translate }}"
+                        id="email" name="email" formControlName="email" class="form-control">
+                    <small class="required-color"
+                        *ngIf="showError && (signUpForm.controls.email.invalid || signUpForm.controls.email.errors?.required)">{{
+                        'REQUIRED_INPUT' | translate }}</small>
                 </div>
                 <div class="col-6">
-                    <label style="margin-top: 5%;"><small>{{'PHONE' | translate}}:</small></label>
-                    <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
-                    type="text" style="border: 1px solid bottom!important;"
-                    placeholder="{{ 'PHONE' | translate }}" id="email" name="phone" [(ngModel)]="registerModel.phone"
-                    class="form-control" required>
-                    <small class="required-color" *ngIf="registerModel.phone.length === 0" [hidden]="!showEmptyFields">{{ 'REQUIRED_INPUT' | translate }}</small>
+                    <label style="margin-top: 5%;"><small>{{'PHONE' | translate}}</small></label>
+                    <input
+                        class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+                        type="number" style="border: 1px solid bottom!important;"
+                        placeholder="{{ 'PHONE' | translate }}" id="phone" name="phone" formControlName="phone"
+                        class="form-control">
+                    <small class="required-color"
+                        *ngIf="showError && (signUpForm.controls.phone.invalid || signUpForm.controls.phone.errors?.required)">{{
+                        'REQUIRED_INPUT' | translate }}</small>
                 </div>
                 <div class="col-6">
-                    <label style="margin-top: 5%;"><small>{{'PASSWORD' | translate}}:</small></label>
-                    <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
-                    type="password" style="border: 1px solid bottom!important;"
-                    placeholder="{{ 'PASSWORD' | translate }}" id="password" name="password" [(ngModel)]="registerModel.password"
-                    class="form-control" required>
-                    <small class="required-color" *ngIf="registerModel.password.length === 0" [hidden]="!showEmptyFields">{{ 'REQUIRED_INPUT' | translate }}</small>
+                    <label style="margin-top: 5%;"><small>{{'PASSWORD' | translate}}</small></label>
+                    <input
+                        class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+                        type="password" style="border: 1px solid bottom!important;"
+                        placeholder="{{ 'PASSWORD' | translate }}" id="password" name="password"
+                        formControlName="password" onpaste="return false;" class="form-control">
+                    <small class="required-color"
+                        *ngIf="showError && (signUpForm.controls.password.invalid || signUpForm.controls.password.errors?.required)"><span
+                            style="letter-spacing: 0;">8 karakter, bir büyük, bir küçük harf, bir sayı ve bir özel
+                            karakter içermelidir*</span></small>
                 </div>
                 <div class="col-6">
-                    <label style="margin-top: 5%;"><small>{{'PASSWORD_AGAIN' | translate}}:</small></label>
-                    <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
-                    type="password" style="border: 1px solid bottom!important;"
-                    placeholder="{{ 'PASSWORD' | translate }}" id="password-again" name="password" [(ngModel)]="registerModel.passwordAgain"
-                    class="form-control" required>
-                    <small class="required-color" *ngIf="registerModel.passwordAgain.length === 0" [hidden]="!showEmptyFields">{{ 'REQUIRED_INPUT' | translate }}</small>
+                    <label style="margin-top: 5%;"><small>{{'PASSWORD_AGAIN' | translate}}</small></label>
+                    <input
+                        class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
+                        type="password" style="border: 1px solid bottom!important;"
+                        placeholder="{{ 'PASSWORD' | translate }}" id="passwordAgain" name="passwordAgain"
+                        formControlName="passwordAgain" onpaste="return false;" class="form-control">
+                    <small class="required-color"
+                        *ngIf="showError && (signUpForm.controls.passwordAgain.invalid || signUpForm.controls.passwordAgain.errors?.required)">Şifreler
+                        Eşleşmedi</small>
                 </div>
                 <div class="col-6">
-                    <label class="list-group-item d-flex gap-2" style="margin-top: 5%;">
-                        <input class="form-check-input form-control" type="checkbox" [checked]="registerModel.isUsageRulesApproved" 
-                        (change)="onUsageRulesCheckboxChange()" [(ngModel)]="registerModel.isUsageRulesApproved" value="" id="flexCheckDefault">
-                        <span>
-                            <small class="d-block" style="font-size: small;">{{'USAGE_RULES_TITLE' | translate}}</small>
-                        </span>
-                    </label>
-                    <small class="required-color" *ngIf="!registerModel.usagePurpose" [hidden]="!showEmptyFields">{{ 'REQUIRED_INPUT' | translate }}</small>
+                    <div class="form-check col align-items-center d-flex">
+                        <input class="form-check-input" type="checkbox" value="" id="usageRules"
+                            formControlName="usageRules">
+                        <label class="form-check-label small text-dark mt-1" for="usageRules" style="margin-left:5px;">
+                            {{ 'USAGE_RULES_TITLE' | translate }}
+                        </label>
+                    </div>
+                    <small class="required-color"
+                        *ngIf="showError && (signUpForm.controls.usageRules.invalid || signUpForm.controls.usageRules.errors?.required)">{{
+                        'REQUIRED_INPUT' | translate }}</small>
                 </div>
                 <div class="col-6">
-                    <label class="list-group-item d-flex gap-2" style="margin-top: 5%;">
-                        <input class="form-check-input form-control" type="checkbox" [checked]="registerModel.isContractApproved" 
-                        (change)="onContractCheckboxChange()" [(ngModel)]="registerModel.isContractApproved" value="">
-                        <span>
-                            <small class="d-block" style="font-size: small;">{{'CONTRACT_CONFIRM_TITLE' | translate}}</small>
-                        </span>
-                    </label>
-                    <small class="required-color" *ngIf="!registerModel.usagePurpose" [hidden]="!showEmptyFields">{{ 'REQUIRED_INPUT' | translate }}</small>
-
+                    <div class="form-check col align-items-center d-flex">
+                        <input class="form-check-input" type="checkbox" value="" id="contractConfirm"
+                            formControlName="contractConfirm">
+                        <label class="form-check-label small text-dark mt-1" for="contractConfirm"
+                            style="margin-left:5px;">
+                            {{ 'CONTRACT_CONFIRM_TITLE' | translate }}
+                        </label>
+                    </div>
+                    <small class="required-color"
+                        *ngIf="showError && (signUpForm.controls.contractConfirm.invalid || signUpForm.controls.contractConfirm.errors?.required)">{{
+                        'REQUIRED_INPUT' | translate }}</small>
                 </div>
             </div>
-            
         </div>
     </div>
     <div class="form-group row mt-3 text-center">
@@ -115,21 +136,24 @@
             <button class="button btn btn-danger align-items-center" type="submit">{{ 'SIGNUP' | translate }}</button>
         </div>
         <div class="d-grid gap-2 mt-3">
-            <button class="button btn btn-light" type="submit" [routerLink]="['/auth/login']">{{ 'RETURN_LOGIN' | translate }}</button>
-          </div>
+            <button class="button btn btn-light" type="submit" [routerLink]="['/auth/login']">{{ 'RETURN_LOGIN' |
+                translate }}</button>
+        </div>
     </div>
     <div class="form-group row mt-2">
         <div class="col-6 align-items-center btn btn-light language" [ngClass]="{
           'language-background-red':currentLanguage === 'tr',
           'language-background-white':currentLanguage === 'en'}" (click)="changeLanguage('tr')">
-          <img style="width: auto; height: auto;" src="assets/images/languages-flag/tr.svg" alt="{{ 'TURKISH' | translate }}" class="flag-icon">
-          &nbsp;<small>{{ 'TURKISH' | translate }}</small>
+            <img style="width: auto; height: auto;" src="assets/images/languages-flag/tr.svg"
+                alt="{{ 'TURKISH' | translate }}" class="flag-icon">
+            &nbsp;<small>{{ 'TURKISH' | translate }}</small>
         </div>
         <div class="col-6 align-items-center btn btn-light language" [ngClass]="{
           'language-background-red':currentLanguage === 'en',
           'language-background-white':currentLanguage === 'tr'}" (click)="changeLanguage('en')">
-          <img style="width: auto; height: auto;" src="assets/images/languages-flag/gb-eng.svg" alt="{{ 'ENGLISH' | translate }}" class="flag-icon">
-          &nbsp;<small>{{ 'ENGLISH' | translate }}</small>
+            <img style="width: auto; height: auto;" src="assets/images/languages-flag/gb-eng.svg"
+                alt="{{ 'ENGLISH' | translate }}" class="flag-icon">
+            &nbsp;<small>{{ 'ENGLISH' | translate }}</small>
         </div>
-      </div>
+    </div>
 </form>

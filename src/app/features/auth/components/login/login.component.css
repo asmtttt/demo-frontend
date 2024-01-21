@@ -48,10 +48,6 @@ img {
     width: 140px;
 }
 
-.required-color {
-    color: #de3535;
-}
-
 .language {
     text-align: center;
     border-color: lightgray !important;
@@ -62,6 +58,5 @@ img {
 }
 
 .language-background-white {
-    border-color: white !important;
-    
+    border-color: white !important; 
 }

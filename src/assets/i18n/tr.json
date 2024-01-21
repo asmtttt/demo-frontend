@@ -8,13 +8,13 @@
     "LOGIN":"Giriş Yap",
     "NOT_A_REMEMBER_YET":"Henüz Üye Değil Misiniz?",
     "LANGUAGE":"Dil",
-    "REQUIRED_INPUT":"Bu alan boş bırakılamaz!",
+    "REQUIRED_INPUT":"Zorunlu*",
     "TURKISH":"Türkçe",
     "ENGLISH":"İngilizce",
     "COPYRIGHT": "Copyright © 2023 - ∞ Tüm Hakları Saklıdır.",
     "REGISTER": "Üye Ol",
-    "FIRST_NAME": "Ad",
-    "LAST_NAME": "Soyad",
+    "FIRST_NAME": "İsim",
+    "LAST_NAME": "Soyisim",
     "PHONE": "Telefon",
     "SIGNUP": "Kayıt Ol",
     "RETURN_LOGIN": "Girişe Dön",
@@ -22,5 +22,11 @@
     "CHOOSE": "Seçiniz",
     "USAGE_TYPE": "Kullanım Türü",
     "USAGE_RULES_TITLE": "Kullanım Koşullarını Okudum Onaylıyorum.",
-    "CONTRACT_CONFIRM_TITLE": "Sözleşmeyi Okudum Onaylıyorum."
+    "CONTRACT_CONFIRM_TITLE": "Sözleşmeyi Okudum Onaylıyorum.",
+    "PLEASE_ENTER_EMAIL": "Email Adresinizi Giriniz",
+    "PLEASE_ENTER_PASSWORD": "Şifrenizi Giriniz",
+    "PASSWORD_RULES": "Şifreniz 8 karakter, büyük, küçük harf, sayı ve özel karakter içermelidir",
+    "PASSWORD_NOT_MATCH": "Şifreler Eşleşmedi",
+    "RESET_PASSWORD": "Şifre Sıfırla"
+
 }

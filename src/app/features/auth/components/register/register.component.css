@@ -19,8 +19,8 @@ form {
 
 .form-check-input {
     box-shadow: none!important;
-    /* width:0.5em!important;
-    height:0.5em!important; */
+    width:0.8em!important;
+    height:0.8em!important;
     border: solid 1.5px #a2a2a2!important;
     border-radius: 0%!important;
 }
@@ -46,10 +46,6 @@ form {
   
 img {
     width: 140px;
-}
-
-.required-color {
-    color: #de3535;
 }
 
 .language {

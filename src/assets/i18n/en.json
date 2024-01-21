@@ -8,7 +8,7 @@
     "LOGIN":"Login",
     "NOT_A_REMEMBER_YET":"Not a Remember Yet?",
     "LANGUAGE":"Language",
-    "REQUIRED_INPUT":"This field cannot be left blank!",
+    "REQUIRED_INPUT":"Required*",
     "TURKISH":"Turkish",
     "ENGLISH":"English",
     "COPYRIGHT": "Copyright © 2023 - ∞ All Rights Reserved.",
@@ -22,5 +22,10 @@
     "CHOOSE": "Choose",
     "USAGE_TYPE": "Usage Type",
     "USAGE_RULES_TITLE": "I have read and agree to the terms of use.",
-    "CONTRACT_CONFIRM_TITLE": "I have read and agree to the terms and conditions."
+    "CONTRACT_CONFIRM_TITLE": "I have read and agree to the terms and conditions.",
+    "PLEASE_ENTER_EMAIL": "Enter an email",
+    "PLEASE_ENTER_PASSWORD": "Enter password",
+    "PASSWORD_RULES": "Your password must contain 8 characters, uppercase, lowercase letters, numbers and special characters.",
+    "PASSWORD_NOT_MATCH": "Password Does Not Match",
+    "RESET_PASSWORD": "Reset Password"
 }
