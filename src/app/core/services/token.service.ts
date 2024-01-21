@@ -20,6 +20,9 @@ export class TokenService {
         return false;
       }
     }
+    else {
+      return false;
+    }
     return true;
   }
 

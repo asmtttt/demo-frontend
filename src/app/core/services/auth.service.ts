@@ -30,5 +30,6 @@ export class AuthService {
 
   logOut() {
     this.localService.clear();
+    this.router.navigateByUrl("auth/login");
   }
 }

@@ -1,0 +1,20 @@
+
+
+.btn-circle {
+    border-radius: 100%;
+    border-color:#3A3B3C;
+    background-color: #3A3B3C;
+}
+
+.btn-circle:hover {
+    background-color: #5b5c5d ;
+}
+
+.btn-square:hover {
+    
+    background-color: #5b5c5d ;
+}
+
+i {
+    color:white;
+}

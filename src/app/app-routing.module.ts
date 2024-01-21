@@ -20,6 +20,12 @@ const routes: Routes = [
     canActivate: [authGuard],
     loadChildren: () =>
       import('./features/dashboard/dashboard.module').then(m => m.DashboardModule)
+  },
+  {
+    path: 'chat',
+    component: ProdiverLayoutComponent,
+    loadChildren: () =>
+      import('./features/chat/chat.module').then(m => m.ChatModule)
   }
 ];
 

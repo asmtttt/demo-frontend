@@ -32,3 +32,6 @@ a {
 .required-color {
     color: #de3535;
 }
+input::placeholder {
+    font-size: smaller;
+}
