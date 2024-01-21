@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { LoginModel } from '../../models/login-request-model';
-import { TranslateService } from '@ngx-translate/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { PageService } from 'src/app/core/services/page.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit{
   loginForm: any;
   showError: boolean = false;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
   ngOnInit(): void {
     this.loginForm = new FormGroup({
       email: new FormControl("", [
@@ -35,6 +35,6 @@ export class LoginComponent implements OnInit{
       return;
     }
     this.showError = false;
-    //TODO
+    this.authService.login(this.loginForm.value, true);
   }
 }

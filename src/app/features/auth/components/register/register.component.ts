@@ -27,13 +27,13 @@ export class RegisterComponent implements OnInit {
       firstName: new FormControl("", [
         Validators.required,
         Validators.minLength(3),
-        Validators.maxLength(15),
+        Validators.maxLength(20),
         Validators.pattern(/^[a-zA-ZğüşıöçĞÜŞİÖÇ]+$/)
       ]),
       lastName: new FormControl("", [
         Validators.required,
         Validators.minLength(3),
-        Validators.maxLength(25),
+        Validators.maxLength(20),
         Validators.pattern(/^[a-zA-ZğüşıöçĞÜŞİÖÇ]+$/)
       ]),
       email: new FormControl("", [
