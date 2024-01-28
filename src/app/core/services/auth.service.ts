@@ -14,7 +14,7 @@ export class AuthService {
   constructor(private localService: LocalService, private pageService: PageService, private tokenService: TokenService,
     private router: Router) { }
 
-  login(body: any, rememberMeFlag: boolean) {
+  login(body: any, rememberMeFlag: boolean): any {
      this.pageService.login(body).subscribe(res => {
       if (res.token && res.errorMessage == null) {
         this.isLoggedIn = true;

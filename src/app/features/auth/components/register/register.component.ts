@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { PageService } from 'src/app/core/services/page.service';
 
 
 @Component({
@@ -11,17 +12,19 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 export class RegisterComponent implements OnInit {
   signUpForm: any;
   showError: boolean = false;
+  errMsg: string = "";
 
-  constructor(private translateService: TranslateService, private fb: FormBuilder) {
+  constructor(private translateService: TranslateService, private fb: FormBuilder,
+    private pageService: PageService) {
 
   }
 
   ngOnInit(): void {
     this.signUpForm = new FormGroup({
-      usagePurpose: new FormControl("", [
+      usagePurposeType: new FormControl("", [
         Validators.required
       ]),
-      usageType: new FormControl("", [
+      userType: new FormControl("", [
         Validators.required
       ]),
       firstName: new FormControl("", [
@@ -53,7 +56,7 @@ export class RegisterComponent implements OnInit {
         Validators.minLength(8),
         this.matchPassword.bind(this)
       ]),
-      phone: new FormControl("", [
+      gsm: new FormControl("", [
         Validators.required,
         Validators.minLength(7),
         Validators.minLength(10),
@@ -81,7 +84,12 @@ export class RegisterComponent implements OnInit {
       return;
     }
     this.showError = false;
-    //TODO
+    this.pageService.register(this.signUpForm.value).subscribe(res => {
+      if (res.errorMessage)
+        this.errMsg = res.errorMessage;
+      else
+        this.errMsg = res.errorMessage;
+    })
   }
 
   changeLanguage(lang: string): void {

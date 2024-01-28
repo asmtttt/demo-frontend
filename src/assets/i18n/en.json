@@ -27,5 +27,7 @@
     "PLEASE_ENTER_PASSWORD": "Enter password",
     "PASSWORD_RULES": "Your password must contain 8 characters, uppercase, lowercase letters, numbers and special characters.",
     "PASSWORD_NOT_MATCH": "Password Does Not Match",
-    "RESET_PASSWORD": "Reset Password"
+    "RESET_PASSWORD": "Reset Password",
+    "EMAIL_EXIST": "The email is already registered",
+    "GSM_EXIST": "The gsm is already registered"
 }

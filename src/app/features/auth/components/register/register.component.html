@@ -15,28 +15,28 @@
                     <label style="margin-top: 5%;"><small>{{'USAGE_PURPOSE' | translate}}</small></label>
                     <select
                         class="form-select form-select-sm border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
-                        aria-label=".form-select-sm usagePurpose" id="usagePurpose" name="usagePurpose"
-                        formControlName="usagePurpose">
+                        aria-label=".form-select-sm usagePurposeType" id="usagePurposeType" name="usagePurposeType"
+                        formControlName="usagePurposeType">
                         <option selected disabled value="">{{'CHOOSE' | translate}}</option>
-                        <option value="1">Hizmet Al</option>
-                        <option value="2">Hizmet Ver</option>
+                        <option [ngValue]="1">Hizmet Al</option>
+                        <option [ngValue]="2">Hizmet Ver</option>
                     </select>
                     <small class="required-color"
-                        *ngIf="showError && (signUpForm.controls.usagePurpose.invalid || signUpForm.controls.usagePurpose.errors?.required)">{{
+                        *ngIf="showError && (signUpForm.controls.usagePurposeType.invalid || signUpForm.controls.usagePurposeType.errors?.required)">{{
                         'REQUIRED_INPUT' | translate }}</small>
                 </div>
                 <div class="col-6">
                     <label style="margin-top: 5%;"><small>{{'USAGE_TYPE' | translate}}</small></label>
                     <select
                         class="form-select form-select-sm border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
-                        aria-label=".form-select-sm usageType" id="usageType" name="usageType"
-                        formControlName="usageType">
+                        aria-label=".form-select-sm userType" id="userType" name="userType"
+                        formControlName="userType">
                         <option selected disabled value="">{{'CHOOSE' | translate}}</option>
-                        <option value="1">Şahıs</option>
-                        <option value="2">Şirket</option>
+                        <option [ngValue]="1">Şahıs</option>
+                        <option [ngValue]="2">Şirket</option>
                     </select>
                     <small class="required-color"
-                        *ngIf="showError && (signUpForm.controls.usageType.invalid || signUpForm.controls.usageType.errors?.required)">{{
+                        *ngIf="showError && (signUpForm.controls.userType.invalid || signUpForm.controls.userType.errors?.required)">{{
                         'REQUIRED_INPUT' | translate }}</small>
                 </div>
                 <div class="col-6">
@@ -73,11 +73,11 @@
                     <label style="margin-top: 5%;"><small>{{'PHONE' | translate}}</small></label>
                     <input
                         class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0"
-                        type="number" style="border: 1px solid bottom!important;"
-                        placeholder="{{ 'PHONE' | translate }}" id="phone" name="phone" formControlName="phone"
+                        type="text" style="border: 1px solid bottom!important;"
+                        placeholder="{{ 'PHONE' | translate }}" id="gsm" name="gsm" formControlName="gsm"
                         class="form-control">
                     <small class="required-color"
-                        *ngIf="showError && (signUpForm.controls.phone.invalid || signUpForm.controls.phone.errors?.required)">{{
+                        *ngIf="showError && (signUpForm.controls.gsm.invalid || signUpForm.controls.gsm.errors?.required)">{{
                         'REQUIRED_INPUT' | translate }}</small>
                 </div>
                 <div class="col-6">
@@ -131,7 +131,10 @@
             </div>
         </div>
     </div>
-    <div class="form-group row mt-3 text-center">
+    <div class="col-12 text-center mt-2" *ngIf="errMsg">
+        <small class="error-color" style="font-size: medium;">{{ errMsg | translate}}</small>
+    </div>
+    <div class="form-group row mt-1 text-center">
         <div class="d-grid gap-2 mt-3">
             <button class="button btn btn-danger align-items-center" type="submit">{{ 'SIGNUP' | translate }}</button>
         </div>

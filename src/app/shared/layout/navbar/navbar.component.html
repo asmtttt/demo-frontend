@@ -21,7 +21,24 @@
       </ul>
       <ul class="navbar-nav my-auto mb-2 mb-lg-0">
         <li class="nav-item d-flex justify-content-center align-items-center text-center">
-          <a class="nav-link active d-block px-4 py-3 rounded-3 btn-square w-100" aria-current="page" href="#"><i class="fa fa-bell fa-lg"></i></a>
+          <!-- <a class="nav-link active d-block px-4 py-3 rounded-3 btn-square w-100" data-bs-toggle="dropdown" aria-current="page" href="#"><i class="fa fa-bell fa-lg"></i></a>
+          <div class="dropdown-center">
+            <ul class="dropdown-menu">
+              <li><button class="dropdown-item" type="button">Action</button></li>
+              <li><button class="dropdown-item" type="button">Another action</button></li>
+              <li><button class="dropdown-item" type="button">Something else here</button></li>
+            </ul>
+          </div> -->
+          <div class="dropdown-center">
+            <button class="btn btn-dark px-4 py-3 rounder-3 btn-square w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa fa-bell fa-lg"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Action two</a></li>
+              <li><a class="dropdown-item" href="#">Action three</a></li>
+            </ul>
+          </div>
         </li>
         <li class="nav-item d-flex justify-content-center align-items-center text-center">
           <a class="nav-link active d-block px-4 py-3 rounded-3 btn-square w-100" aria-current="page" href="#"><i class="fa fa-user-circle fa-lg"></i></a>
@@ -38,17 +55,21 @@
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Çıkış</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="pt-3 px-3">
+        <h5 class="" id="staticBackdropLabel">Çıkış Yapmak İstediğinizden Emin misiniz?</h5>
       </div>
-      <div class="modal-body">
-        Çıkış Yapmak İstediğinizden Emin Misiniz ? 
+      <div class="py-4 px-4 text-center  align-items-center">
+        <div class="row gx-1 d-flex">
+          <div class="col">
+            <button type="button" class="btn btn-primary btn-sm w-100" data-bs-dismiss="modal">Hayır</button>
+          </div>
+          <div class="col">
+            <button type="button" class="btn btn-sm btn-light w-100" style="border-radius: 0;" data-bs-dismiss="modal" (click)="onLogOut()">Evet</button>
+          </div>
+        </div>
+        
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hayır</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="onLogOut()">Evet</button>
-      </div>
+
     </div>
   </div>
 </div>

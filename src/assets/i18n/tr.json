@@ -27,6 +27,9 @@
     "PLEASE_ENTER_PASSWORD": "Şifrenizi Giriniz",
     "PASSWORD_RULES": "Şifreniz 8 karakter, büyük, küçük harf, sayı ve özel karakter içermelidir",
     "PASSWORD_NOT_MATCH": "Şifreler Eşleşmedi",
-    "RESET_PASSWORD": "Şifre Sıfırla"
+    "RESET_PASSWORD": "Şifre Sıfırla",
+    "EMAIL_EXIST": "Email Adresi Sisteme Kayıtlı",
+    "GSM_EXIST": "Telefon Numarası Sisteme Kayıtlı"
+
 
 }
