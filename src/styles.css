@@ -35,3 +35,8 @@ a {
 input::placeholder {
     font-size: smaller;
 }
+
+:host ::ng-deep .modal-backdrop.show {
+    opacity: 0.7 !important;  /* Daha koyu bir arka plan için opaklık değerini artırın */
+    background-color: #000;  /* Arka plan rengini siyah olarak belirleyin */
+  }

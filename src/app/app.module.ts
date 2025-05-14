@@ -7,6 +7,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MapModule } from './features/map/map.module';
 
 @NgModule({
   declarations: [
@@ -24,8 +25,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       }
     }),
     AppRoutingModule,
-    SharedModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MapModule
   ],
   providers: [],
   bootstrap: [AppComponent]

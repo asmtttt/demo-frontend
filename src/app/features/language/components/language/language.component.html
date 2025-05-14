@@ -1,0 +1,16 @@
+<div class="form-group row mt-2">
+    <div class="col-6 align-items-center btn btn-light language" [ngClass]="{
+      'language-background-red':currentLanguage === 'tr',
+      'language-background-white':currentLanguage === 'en'}" (click)="changeLanguage('tr')">
+        <img style="width: auto; height: auto;" src="assets/images/languages-flag/tr.svg"
+            alt="{{ 'TURKISH' | translate }}" class="flag-icon">
+        &nbsp;<small>{{ 'TURKISH' | translate }}</small>
+    </div>
+    <div class="col-6 align-items-center btn btn-light language" [ngClass]="{
+      'language-background-red':currentLanguage === 'en',
+      'language-background-white':currentLanguage === 'tr'}" (click)="changeLanguage('en')">
+        <img style="width: auto; height: auto;" src="assets/images/languages-flag/gb-eng.svg"
+            alt="{{ 'ENGLISH' | translate }}" class="flag-icon">
+        &nbsp;<small>{{ 'ENGLISH' | translate }}</small>
+    </div>
+</div>

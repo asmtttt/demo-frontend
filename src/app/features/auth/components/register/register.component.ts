@@ -1,7 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PageService } from 'src/app/core/services/page.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { RegisterRequestModel } from '../../models/register-request-model';
+import { GENDER_OPTIONS } from 'src/app/core/enums/Gender';
+import { LOCATION_TYPE_OPTIONS } from 'src/app/core/enums/LocationType';
+import { USER_TYPE_OPTIONS } from 'src/app/core/enums/UserType';
+import { UtilsService } from 'src/app/core/services/utils.service';
 
 
 @Component({
@@ -14,59 +20,72 @@ export class RegisterComponent implements OnInit {
   showError: boolean = false;
   errMsg: string = "";
 
-  constructor(private translateService: TranslateService, private fb: FormBuilder,
-    private pageService: PageService) {
+  genderOptions = GENDER_OPTIONS;
+  locationTypeOptions = LOCATION_TYPE_OPTIONS;
+  userTypeOptions = USER_TYPE_OPTIONS;
+  
+  constructor(private cdr: ChangeDetectorRef, private translateService: TranslateService, private fb: FormBuilder,
+    private pageService: PageService, private authService: AuthService, private utilsService: UtilsService) {
 
   }
 
   ngOnInit(): void {
     this.signUpForm = new FormGroup({
-      usagePurposeType: new FormControl("", [
+      Name: new FormControl("", [
         Validators.required
       ]),
-      userType: new FormControl("", [
+      LastName: new FormControl("", [
         Validators.required
       ]),
-      firstName: new FormControl("", [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(20),
-        Validators.pattern(/^[a-zA-ZğüşıöçĞÜŞİÖÇ]+$/)
+      UserName: new FormControl("", [
+        Validators.required
       ]),
-      lastName: new FormControl("", [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(20),
-        Validators.pattern(/^[a-zA-ZğüşıöçĞÜŞİÖÇ]+$/)
-      ]),
-      email: new FormControl("", [
+      Mail: new FormControl("", [
         Validators.required,
         Validators.maxLength(128),
         Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
       ]),
-      password: new FormControl("", [
-        Validators.required,
-        Validators.maxLength(30),
-        Validators.minLength(8),
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
+      Password: new FormControl("", [
+        Validators.required
       ]),
-      passwordAgain: new FormControl("", [
-        Validators.required,
-        Validators.maxLength(30),
-        Validators.minLength(8),
-        this.matchPassword.bind(this)
+      PasswordAgain: new FormControl("", [
+        Validators.required
       ]),
-      gsm: new FormControl("", [
-        Validators.required,
-        Validators.minLength(7),
-        Validators.minLength(10),
-        Validators.pattern(/^\d{3}\d{3}\d{4}$/)
+      Phone: new FormControl("", [
+        Validators.required
       ]),
-      usageRules: new FormControl("", [
-        Validators.requiredTrue
+      Gender: new FormControl("", [
+        Validators.required
       ]),
-      contractConfirm: new FormControl("", [
-        Validators.requiredTrue
+      BirthDate: new FormControl("", [
+        Validators.required
+      ]),
+      Country: new FormControl("", [
+        Validators.required
+      ]),
+      City: new FormControl("", [
+        Validators.required
+      ]),
+      District: new FormControl("", [
+        Validators.required
+      ]),
+      ZipCode: new FormControl("", [
+        Validators.required
+      ]),
+      LocationName: new FormControl("", [
+        Validators.required
+      ]),
+      LocationType: new FormControl("", [
+        Validators.required
+      ]),
+      AddressText: new FormControl("", [
+        Validators.required
+      ]),
+      IsUsageRulesConfirm: new FormControl("", [
+        Validators.required
+      ]),
+      IsContractConfirm: new FormControl("", [
+        Validators.required
       ])
     });
 
@@ -77,20 +96,6 @@ export class RegisterComponent implements OnInit {
 
   currentLanguage: string = "tr";
   showEmptyFields = false;
-
-  onSubmit() {
-    if (this.signUpForm.status == "INVALID" || this.signUpForm.errors != null) {
-      this.showError = true;
-      return;
-    }
-    this.showError = false;
-    this.pageService.register(this.signUpForm.value).subscribe(res => {
-      if (res.errorMessage)
-        this.errMsg = res.errorMessage;
-      else
-        this.errMsg = res.errorMessage;
-    })
-  }
 
   changeLanguage(lang: string): void {
     this.translateService.use(lang);
@@ -105,5 +110,46 @@ export class RegisterComponent implements OnInit {
       return password === passwordAgain ? null : { 'passwordMismatch': true };
     }
     return { 'passwordMismatch': false };
+  }
+
+
+  onSubmit(): void {
+    this.errMsg = "";
+
+    console.log("this signupform: ", this.signUpForm );
+    this.utilsService.isNullOrFalseOrEmpty(this.signUpForm.value.IsUsageRulesConfirm)
+    this.utilsService.isNullOrFalseOrEmpty(this.signUpForm.value.IsContractConfirm)
+
+    if (this.signUpForm.invalid || !this.isValidContracts(this.signUpForm.value.IsUsageRulesConfirm, this.signUpForm.value.IsContractConfirm, )) {
+      this.showError = true;
+      this.errMsg = this.translateService.instant("VALIDATION_ERROR_ALL_FIELDS")
+            
+      return;
+    }
+    
+    const request: RegisterRequestModel = this.signUpForm.value;
+    request.BirthDate = new Date(this.signUpForm.value.BirthDate);
+    
+    this.authService.register(request).subscribe({
+      next: (result) => {
+        if (result.result_code === 200){
+          this.showError = false;
+        }
+        else { 
+          this.showError = true;
+        }
+
+        this.errMsg = this.translateService.instant(result.result_message)
+      },
+      error: (err) => {
+        this.showError = true;
+        this.errMsg = this.translateService.instant("ERROR_DURING_PROCESS");;
+
+      }
+    });
+  }
+
+  isValidContracts(isUsageRulesConfirm: any, isContractConfirm: any){
+    return !this.utilsService.isNullOrFalseOrEmpty(isUsageRulesConfirm) || !this.utilsService.isNullOrFalseOrEmpty(isContractConfirm)
   }
 }

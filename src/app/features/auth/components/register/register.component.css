@@ -61,3 +61,27 @@ img {
     border-color: white !important;
     
 }
+
+.center {
+    text-align: center !important;
+}
+
+.pointer {
+    cursor: pointer !important;
+}
+
+.fade {
+    transition: opacity 0.5s ease-in-out;
+    opacity: 1;
+  }
+  
+  .small_text_display {
+    visibility: visible;
+    opacity: 100;
+  }
+
+  .small_text_hidden {
+    visibility: hidden;
+    opacity: 0;
+    display: none block;
+  }

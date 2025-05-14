@@ -1,14 +1,14 @@
 <!-- Login Yapısı -->
 <form class="border" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <div class="row justify-content-center">
-    <img src="https://i.pinimg.com/originals/82/c6/5b/82c65b9bb0a75026fc4c82a438b4cc9b.jpg" alt="">
+    <img src="/assets/images/amfy-logo-5.png" alt="">
   </div>
   <div class="form-group row mt-3">
     <div class="text-center">
         <h3 class="mt-1">{{'LOGIN' | translate}}</h3>
         <hr style="width:50%; margin: auto;">
     </div>
-</div>
+  </div>
   <div class="form-group row mt-1">
     <label style="margin-top: 5%;"><small>{{'EMAIL' | translate}}</small></label>
     <input class="form-control border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0" 
@@ -24,10 +24,17 @@
     <small class="required-color" *ngIf="showError && loginForm.controls.password.errors?.required">{{ 'REQUIRED_INPUT' | translate }}</small>
     <small class="required-color" *ngIf="showError && loginForm.controls.password.invalid && !loginForm.controls.password.errors?.required">{{ 'PASSWORD_RULES' | translate }}*</small>
   </div>
+
+  <div class="col-12 text-center mt-2 messageText">
+    <small class="text-danger" *ngIf="responseMessage.messageType == MessageType.Information" style="visibility: hidden;"></small>
+    <small class="text-danger" *ngIf="responseMessage.messageType == MessageType.Error"  style="visibility: visible;"  >{{ responseMessage.message }}</small>
+    <small class="text-success" *ngIf="responseMessage.messageType == MessageType.Success" style="visibility: visible;" >{{ responseMessage.message }}</small>
+  </div>
+  
   <div class="form-group row mt-2">
     <div class="form-check col align-items-center d-flex">
-      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-      <label class="form-check-label small text-dark mt-1" for="flexCheckDefault" style="margin-left:5px;">
+      <input class="form-check-input cursor" type="checkbox" value="" id="flexCheckDefault">
+      <label class="form-check-label small text-dark mt-1 cursor" id="remember_me" for="flexCheckDefault" style="margin-left:5px;">
         {{ 'REMEMBER_ME' | translate }}
       </label> 
     </div>
@@ -42,32 +49,25 @@
       <button class="button btn btn-light" type="submit" [routerLink]="['/auth/register']">{{ 'NOT_A_REMEMBER_YET' | translate }}</button>
     </div>
   </div>
-  <!-- <div class="form-group row mt-2">
-    <div class="col-6 align-items-center btn btn-light language" [ngClass]="{
-      'language-background-red':currentLanguage === 'tr',
-      'language-background-white':currentLanguage === 'en'}" (click)="changeLanguage('tr')">
-      <img style="width: auto; height: auto;" src="assets/images/languages-flag/tr.svg" alt="{{ 'TURKISH' | translate }}" class="flag-icon">
-      &nbsp;<small>{{ 'TURKISH' | translate }}</small>
-    </div>
-    <div class="col-6 align-items-center btn btn-light language" [ngClass]="{
-      'language-background-red':currentLanguage === 'en',
-      'language-background-white':currentLanguage === 'tr'}" (click)="changeLanguage('en')">
-      <img style="width: auto; height: auto;" src="assets/images/languages-flag/gb-eng.svg" alt="{{ 'ENGLISH' | translate }}" class="flag-icon">
-      &nbsp;<small>{{ 'ENGLISH' | translate }}</small>
-    </div>
-  </div> -->
+
+  <app-language></app-language>
 </form>
 
-<!-- language dropdown -->
-<!-- <div class="col-4">
-  <div class="dropdown">
-    <button class="btn btn-light language dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-      Language
-    </button>
-    <ul class="dropdown-menu" aria-labelledby="languageDropdown">
-      <li><a class="dropdown-item" href="#"><img style="width: auto; height: auto;" src="assets/images/languages-flag/tr.svg" alt="Türkçe" class="flag-icon"> Türkçe</a></li>
-      <li><a class="dropdown-item" href="#"><img style="width: auto; height: auto;" src="assets/images/languages-flag/gb-eng.svg" alt="English" class="flag-icon"> English</a></li>
-    </ul>
-  </div>
-</div> -->
 
+<!-- Error Message Modal -->
+<div class="modal fade" [class.show]="showModal" [style.display]="showModal ? 'block' : 'none'" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="errorModalLabel">{{ 'ERROR' | translate }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="toggleModal()"></button>
+      </div>
+      <div class="modal-body">
+        {{ responseMessage.message }}
+      </div>
+      <div class="modal-footer">
+        <button class="button btn btn-danger" type="button" (click)="toggleModal()">{{ 'CLOSE' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+.language {
+    text-align: center;
+    border-color: lightgray !important;
+}
+
+.language-background-red {
+    border-color: #de3535 !important;
+}
+
+.language-background-white {
+    border-color: white !important;
+    
+}

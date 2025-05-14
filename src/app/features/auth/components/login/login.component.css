@@ -60,3 +60,15 @@ img {
 .language-background-white {
     border-color: white !important; 
 }
+
+.cursor {
+    cursor: pointer !important;
+}
+
+#remember_me:hover {
+    color: #de3535 !important;
+}
+
+.messageText {
+    visibility: visible;
+}

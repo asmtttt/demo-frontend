@@ -16,4 +16,9 @@ export class PageService {
   register(body: any) {
     return this.apiService.postWithoutToken("/User/Register", body);
   }
+
+  getUser(body: any) {
+    return this.apiService.postWithoutToken("GetUser", body);
+  }
+  
 }

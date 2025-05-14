@@ -1,0 +1,73 @@
+<!-- profile.component.html -->
+<div *ngIf="user" class="container mt-5">
+    <div class="row justify-content-center">
+      <!-- Profile Photo Card -->
+      <div class="col-md-4 mb-3">
+        <div class="card shadow rounded-lg p-3 text-center">
+          <div class="card-body">
+            <img src="assets/images/free-profile-photo.png" alt="Profile Photo" class="img-fluid rounded" style="max-height: 150px;">
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="row justify-content-center">
+        <!-- Name, Surname, and General Information Card -->
+      <div class="col-md-4">
+        <div class="card shadow rounded-lg p-3">
+          <div class="card-header">
+            <h3 class="card-title text-center" style="text-transform: capitalize;">{{ user.Name + ' ' + user.LastName }}</h3>
+          </div>
+          <div class="card-body">
+            <p class="card-text">{{ 'USERNAME' | translate }}: <span class="text-danger">{{ user.UserName }}</span></p>
+            <p class="card-text">{{ 'EMAIL' | translate }}: <span class="text-danger">{{ user.Mail }}</span></p>
+            <p class="card-text">{{ 'GENDER' | translate }}: <span class="text-danger">{{ user.Gender }}</span></p>
+            <p class="card-text">{{ 'BIRTH_DATE' | translate }}: <span class="text-danger">{{ user.BirthDate | date:'longDate' }}</span></p>
+            <div class="text-center">
+              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addressesModal">
+                {{ 'SHOW_ADDRESSES' | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Addresses Modal -->
+  <div class="modal fade" id="addressesModal" tabindex="-1" aria-labelledby="addressesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered custom-modal-width">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addressesModalLabel">{{ 'ADDRESSES' | translate }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">{{ 'NAME' | translate }}</th>
+                <th scope="col">{{ 'ADDRESS' | translate }}</th>
+                <th scope="col">{{ 'DISTRICT' | translate }}</th>
+                <th scope="col">{{ 'CITY' | translate }}</th>
+                <th scope="col">{{ 'ZIP_CODE' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="capitalize" *ngFor="let address of user?.Addresses; let i = index">
+                <td>{{ address.Name }}</td>
+                <td>{{ address.AddressText }}</td>
+                <td>{{ address.District }}</td>
+                <td>{{ address.City }}</td>
+                <td>{{ address.ZipCode }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer justify-content-end">
+          <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">{{ 'CLOSE' | translate }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

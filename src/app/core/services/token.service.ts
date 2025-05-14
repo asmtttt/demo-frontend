@@ -31,11 +31,11 @@ export class TokenService {
   }
 
   getToken(): string | null {
-    return this.localStorageService.getItem("Token");
+    return this.localStorageService.getItem("auth_token");
   }
 
   setToken(token: string) {
-    this.localStorageService.setItem("Token", token);
+    this.localStorageService.setItem("auth_token", token);
   }
 
   isAuthenticated(): boolean {

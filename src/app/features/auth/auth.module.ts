@@ -6,6 +6,9 @@ import { RegisterComponent } from './components/register/register.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LanguageComponent } from '../language/components/language/language.component';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -17,14 +20,17 @@ const routes: Routes = [
   declarations: [
     LoginComponent,
     RegisterComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    LanguageComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     TranslateModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbTooltipModule,
+    SharedModule
   ]
 })
 export class AuthModule { }

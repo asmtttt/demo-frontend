@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProdiverLayoutComponent } from './layout/prodiver-layout/prodiver-layout.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
@@ -20,7 +20,9 @@ import { PublicLayoutComponent } from './layout/public-layout/public-layout.comp
   ],
   exports: [
     ProdiverLayoutComponent,
-    TranslateModule
-  ]
+    TranslateModule,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+
 })
 export class SharedModule { }

@@ -1,37 +1,32 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-danger bg-danger navbar-custom">
   <div class="container-fluid">
-    <a class="navbar-brand text-white" href="#">Firma Logo</a>
+    <a class="navbar-brand text-white" href="#"><img src="/assets/images/eagle-3.png" alt="" style="height: 75px; width: 75px;">Amfy</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
         <li class="nav-item d-flex justify-content-center align-items-center text-center">
-          <a class="nav-link active d-block px-5 py-3 rounded-3 btn-square w-100" aria-current="page" href="#"><i class="fa fa-home fa-lg"></i></a>
+          <a class="nav-link active d-block px-5 py-3 rounded-3 btn-square w-100" aria-current="page" href="#"><i class="fa fa-home "></i></a>
         </li>
         <li class="nav-item d-flex justify-content-center align-items-center text-center">
-          <a [routerLink]="['chat']" class="nav-link active d-block px-5 py-3 rounded-3 btn-square w-100" aria-current="page" href=""><i class="fa fa-inbox fa-lg"></i></a>
+          <a [routerLink]="['chat']" class="nav-link active d-block px-5 py-3 rounded-3 btn-square w-100" aria-current="page" href=""><i class="fa fa-inbox "></i></a>
         </li>
         <li class="nav-item d-flex justify-content-center align-items-center text-center">
-          <a class="nav-link active d-block px-5 py-3 rounded-3 btn-square w-100" aria-current="page" href="#"><i class="fa fa-calendar fa-lg"></i></a>
+          <a class="nav-link active d-block px-5 py-3 rounded-3 btn-square w-100" aria-current="page" href="#"><i class="fa fa-calendar "></i></a>
         </li>
         <li class="nav-item d-flex justify-content-center align-items-center text-center">
-          <a class="nav-link active d-block px-5 py-3 rounded-3 btn-square w-100" aria-current="page" href="#"><i class="fa fa-bar-chart fa-lg"></i></a>
+          <a class="nav-link active d-block px-5 py-3 rounded-3 btn-square w-100" aria-current="page" href="#"><i class="fa fa-bar-chart "></i></a>
+        </li>
+        <li class="nav-item d-flex justify-content-center align-items-center text-center">
+          <a [routerLink]="['/map']" class="nav-link active d-block px-5 py-3 rounded-3 btn-square w-100" aria-current="page" href="#"><i class="fa fa-globe"></i></a>
         </li>
       </ul>
       <ul class="navbar-nav my-auto mb-2 mb-lg-0">
         <li class="nav-item d-flex justify-content-center align-items-center text-center">
-          <!-- <a class="nav-link active d-block px-4 py-3 rounded-3 btn-square w-100" data-bs-toggle="dropdown" aria-current="page" href="#"><i class="fa fa-bell fa-lg"></i></a>
           <div class="dropdown-center">
-            <ul class="dropdown-menu">
-              <li><button class="dropdown-item" type="button">Action</button></li>
-              <li><button class="dropdown-item" type="button">Another action</button></li>
-              <li><button class="dropdown-item" type="button">Something else here</button></li>
-            </ul>
-          </div> -->
-          <div class="dropdown-center">
-            <button class="btn btn-dark px-4 py-3 rounder-3 btn-square w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fa fa-bell fa-lg"></i>
+            <button class="nav-link active d-block px-4 py-3 rounded-3 btn-square w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa fa-bell "></i>
             </button>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">Action</a></li>
@@ -40,11 +35,40 @@
             </ul>
           </div>
         </li>
+
         <li class="nav-item d-flex justify-content-center align-items-center text-center">
-          <a class="nav-link active d-block px-4 py-3 rounded-3 btn-square w-100" aria-current="page" href="#"><i class="fa fa-user-circle fa-lg"></i></a>
+          <div class="dropdown-center">
+            <!-- <button class="nav-link active d-block px-4 py-3 rounded-3 btn-square w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa fa-globe"></i>
+            </button> -->
+            <button class="nav-link active d-block px-4 py-3 rounded-3 btn-square w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img *ngIf="currentLanguage === 'en'" src="assets/images/languages-flag/gb-eng.svg" alt="English" style="width: 20px; height: auto;">
+              <img *ngIf="currentLanguage === 'tr'" src="assets/images/languages-flag/tr.svg" alt="Türkçe" style="width: 20px; height: auto;">
+            </button>
+            
+            <ul class="dropdown-menu">
+              <li style="cursor: pointer;">
+                <a class="dropdown-item d-flex align-items-center" [ngClass]="{'selected-language': currentLanguage === 'en'}" (click)="changeLanguage('en')">
+                  <img src="assets/images/languages-flag/gb-eng.svg" alt="{{ 'ENGLISH' | translate }}" class="me-2" style="width: 20px; height: auto;">
+                  {{ 'ENGLISH' | translate }}
+                </a>
+              </li>
+              <li style="cursor: pointer;">
+                <a class="dropdown-item d-flex align-items-center" [ngClass]="{'selected-language': currentLanguage === 'tr'}" (click)="changeLanguage('tr')">
+                  <img src="assets/images/languages-flag/tr.svg" alt="{{ 'TURKISH' | translate }}" class="me-2" style="width: 20px; height: auto;">
+                  {{ 'TURKISH' | translate }}
+                </a>
+              </li>
+            </ul>
+          </div>
         </li>
+        
         <li class="nav-item d-flex justify-content-center align-items-center text-center">
-          <a class="nav-link active d-block px-4 py-3 rounded-3 btn-square w-100" data-bs-toggle="modal" data-bs-target="#staticBackdrop" aria-current="page" href="#"><i class="fa fa-power-off fa-lg"></i></a>
+          <a [routerLink]="['/profile']" class="nav-link active d-block px-4 py-3 rounded-3 btn-square w-100" aria-current="page" href="#"><i class="fa fa-user-circle "></i></a>
+        </li>
+        
+        <li class="nav-item d-flex justify-content-center align-items-center text-center">
+          <a class="nav-link active d-block px-4 py-3 rounded-3 btn-square w-100" data-bs-toggle="modal" data-bs-target="#staticBackdrop" aria-current="page" href="#"><i class="fa fa-power-off "></i></a>
         </li>
       </ul>
     </div>
@@ -52,25 +76,21 @@
 </nav>
 
 <!-- LogOut Modal-->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" role="dialog">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="pt-3 px-3">
-        <h5 class="" id="staticBackdropLabel">Çıkış Yapmak İstediğinizden Emin misiniz?</h5>
-      </div>
-      <div class="py-4 px-4 text-center  align-items-center">
-        <div class="row gx-1 d-flex">
-          <div class="col">
-            <button type="button" class="btn btn-primary btn-sm w-100" data-bs-dismiss="modal">Hayır</button>
-          </div>
-          <div class="col">
-            <button type="button" class="btn btn-sm btn-light w-100" style="border-radius: 0;" data-bs-dismiss="modal" (click)="onLogOut()">Evet</button>
-          </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="errorModalLabel">{{ 'CONFIRM' | translate }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" data-bs-dismiss="modal"></button>
         </div>
-        
+        <div class="modal-body">
+          {{ 'LOGOUT_CONFIRMATION' | translate }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger btn-sm w-100" data-bs-dismiss="modal">{{ 'NO' | translate }}</button>
+          <button type="button" class="btn btn-sm btn-light w-100" style="border-radius: 0;" data-bs-dismiss="modal" (click)="onLogOut()">{{ 'YES' | translate }}</button>
+        </div>
       </div>
-
-    </div>
   </div>
 </div>
 <!-- LogOut Modal-->

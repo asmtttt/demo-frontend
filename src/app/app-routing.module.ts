@@ -26,6 +26,18 @@ const routes: Routes = [
     component: ProdiverLayoutComponent,
     loadChildren: () =>
       import('./features/chat/chat.module').then(m => m.ChatModule)
+  },
+  {
+    path: 'profile',
+    component: ProdiverLayoutComponent,
+    loadChildren: () =>
+      import('./features/profile/profile.module').then(m => m.ProfileModule)
+  },
+  {
+    path: 'map',
+    component: ProdiverLayoutComponent,
+    loadChildren: () =>
+      import('./features/map/map.module').then(m => m.MapModule)
   }
 ];
 
