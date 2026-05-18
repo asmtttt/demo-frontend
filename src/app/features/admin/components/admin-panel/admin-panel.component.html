@@ -1,0 +1,79 @@
+<div class="admin-page">
+  <div class="admin-header">
+    <h2>Admin Paneli</h2>
+    <p>Deprem simülasyonu ve bina yönetimi</p>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat green"><span>{{ standingCount }}</span> Ayakta</div>
+    <div class="stat orange"><span>{{ damagedCount }}</span> Hasarlı</div>
+    <div class="stat red"><span>{{ destroyedCount }}</span> Yıkık</div>
+    <div class="stat blue"><span>{{ buildings.length }}</span> Toplam Bina</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <h3>Deprem Simülasyonu</h3>
+      </div>
+      <form [formGroup]="simForm" (ngSubmit)="runSimulation()">
+        <div class="form-row">
+          <div class="field">
+            <label>Merkez Enlem</label>
+            <input type="number" formControlName="center_lat" placeholder="39.9334" step="0.001" />
+          </div>
+          <div class="field">
+            <label>Merkez Boylam</label>
+            <input type="number" formControlName="center_lng" placeholder="32.8597" step="0.001" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label>Büyüklük (1-10)</label>
+            <input type="number" formControlName="magnitude" placeholder="6.5" step="0.1" min="1" max="10" />
+          </div>
+          <div class="field">
+            <label>Etki Yarıçapı (km)</label>
+            <input type="number" formControlName="radius_km" placeholder="50" />
+          </div>
+        </div>
+
+        <div class="simulation-result" *ngIf="simulationResult">
+          <strong>Simülasyon Tamamlandı</strong>
+          <div>Etkilenen bina: {{ simulationResult.affectedCount }}</div>
+          <div>Yıkılan bina: {{ simulationResult.destroyedCount }}</div>
+          <div>Etkilenen kişi: {{ simulationResult.totalPeople }}</div>
+        </div>
+
+        <div class="action-row">
+          <button type="submit" [disabled]="loading" class="btn-danger">
+            {{ loading ? 'Simülasyon çalışıyor...' : 'Depremi Başlat' }}
+          </button>
+          <button type="button" (click)="resetBuildings()" [disabled]="resetLoading" class="btn-secondary">
+            {{ resetLoading ? 'Sıfırlanıyor...' : 'Binaları Sıfırla' }}
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>Simülasyon Geçmişi</h3>
+      </div>
+      <div class="sim-list">
+        <div class="empty" *ngIf="simulations.length === 0">Henüz simülasyon yapılmamış.</div>
+        <div class="sim-item" *ngFor="let s of simulations">
+          <div class="sim-info">
+            <strong>M{{ s.magnitude }}</strong>
+            <span>{{ s.radius_km }} km yarıçap</span>
+          </div>
+          <div class="sim-stats">
+            <span class="badge-red">{{ s.destroyed_buildings_count }} yıkık</span>
+            <span class="badge-orange">{{ s.affected_buildings_count }} etkilendi</span>
+          </div>
+          <div class="sim-date">{{ formatDate(s.created_at) }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,153 +1,67 @@
-<form class="border" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-      <div class="form-group row mt-3">
-        <div class="text-center">
-            <h3 class="mt-1">{{'REGISTER' | translate}}</h3>
-            <hr style="width:50%; margin: auto;">
+<div class="auth-layout">
+  <div class="auth-panel-left">
+    <div class="left-content">
+      <img src="assets/images/amfy-logo-4.png" alt="Disaster Logo" class="brand-logo" />
+      <h1 class="brand-title">Disaster</h1>
+      <p class="brand-subtitle">Deprem Analiz ve Yönetim Sistemi</p>
+      <img src="assets/images/build-2.png" alt="Buildings" class="deco-img" />
+    </div>
+    <div class="left-bg-img" style="background-image: url('assets/images/login-background-photo.jpeg')"></div>
+  </div>
+
+  <div class="auth-panel-right">
+    <div class="auth-form-wrap">
+      <div class="form-header">
+        <h2>Hesap Oluştur</h2>
+        <p>Sisteme kaydolmak için formu doldurun</p>
+      </div>
+
+      <div class="alert-success" *ngIf="successMessage">
+        <span>&#10003;</span> {{ successMessage }}
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="!successMessage">
+        <div class="field-group">
+          <label>Ad Soyad</label>
+          <input type="text" formControlName="fullName" placeholder="Ahmet Yılmaz" autocomplete="name" />
+          <span class="field-error" *ngIf="form.get('fullName')?.touched && form.get('fullName')?.invalid">
+            Ad soyad zorunludur.
+          </span>
         </div>
-      </div>
-  
-    <div class="row">
-      <!-- User Info -->
 
-      <div class="col-md-6 mt-3">
-        <label>{{ 'FIRST_NAME' | translate }}</label>
-        <input formControlName="Name" class="form-control" placeholder="{{ 'EXAMPLE_NAME' | translate }}">
-        <small *ngIf="showError && signUpForm.controls.Name.invalid" class="text-danger">{{ 'REQUIRED_INPUT' | translate }}</small>
-      </div>
-  
-      <div class="col-md-6 mt-3">
-        <label>{{ 'LAST_NAME' | translate }}</label>
-        <input formControlName="LastName" class="form-control" placeholder="{{ 'EXAMPLE_LAST_NAME' | translate }}">
-        <small *ngIf="showError && signUpForm.controls.LastName.invalid" class="text-danger">{{ 'REQUIRED_INPUT' | translate }}</small>
-      </div>
-  
-      <div class="col-md-6 mt-3">
-        <label>{{ 'USERNAME' | translate }}</label>
-        <input formControlName="UserName" class="form-control" placeholder="{{ 'EXAMPLE_USERNAME' | translate }}">
-        <small *ngIf="showError && signUpForm.controls.UserName.invalid" class="text-danger">{{ 'REQUIRED_INPUT' | translate }}</small>
-      </div>
-  
-      <div class="col-md-6 mt-3">
-        <label>{{ 'EMAIL' | translate }}</label>
-        <input formControlName="Mail" class="form-control" placeholder="{{ 'EXAMPLE_EMAIL' | translate }}">
-        <small *ngIf="showError && signUpForm.controls.Mail.invalid" class="text-danger">{{ 'REQUIRED_INPUT' | translate }}</small>
-      </div>
-  
-      <div class="col-md-6 mt-3">
-        <label>{{ 'PASSWORD' | translate }}</label>
-        <input type="password" formControlName="Password" class="form-control">
-        <i class="fa fa-info-circle pointer" style="color: #de3535;" ngbTooltip="{{ 'PASSWORD_TOOLTIP' | translate }}" ></i>
-        <small *ngIf="showError && signUpForm.controls.Password.invalid" class="text-danger">8 karakter minimum</small>
-      </div>
-
-      <div class="col-md-6 mt-3">
-        <label>{{ 'PASSWORD' | translate }}</label>
-        <input type="password" formControlName="PasswordAgain" class="form-control" placeholder="{{ 'PASSWORD_RULE_AGAIN' | translate }}">
-        <small *ngIf="showError && signUpForm.controls.PasswordAgain.invalid" class="text-danger">8 karakter minimum</small>
-      </div>
-  
-      <div class="col-md-6 mt-3">
-        <label>{{ 'PHONE' | translate }}</label>
-        <input formControlName="Phone" class="form-control" placeholder="{{ 'EXAMPLE_PHONE' | translate }}">
-        <small *ngIf="showError && signUpForm.controls.Phone.invalid" class="text-danger">{{ 'REQUIRED_INPUT' | translate }}</small>
-      </div>
-  
-      <!-- Gender & BirthDate -->
-      <div class="col-md-6 mt-3">
-        <label>{{ 'GENDER' | translate }}</label>
-        <select formControlName="Gender" class="form-select pointer">
-            <option class="pointer" value="" disabled selected>{{ 'CHOOSE' | translate }}</option>
-            <ng-container *ngFor="let option of genderOptions">
-                <option class="pointer" [ngValue]="option.value">{{ option.label | translate }}</option>
-            </ng-container>
-        </select>
-        <small *ngIf="showError && signUpForm.controls.Gender.invalid" class="text-danger">{{ 'REQUIRED_INPUT' | translate }}</small>
-    </div>
-  
-      <div class="col-md-6 mt-3">
-        <label>{{ 'BIRTH_DATE' | translate }}</label>
-        <input type="date" formControlName="BirthDate" class="form-control">
-        <small *ngIf="showError && signUpForm.controls.BirthDate.invalid" class="text-danger">{{ 'REQUIRED_INPUT' | translate }}</small>
-      </div>
-
-      <div class="col-md-6 mt-3">
-        <label>{{ 'COUNTRY' | translate }}</label>
-        <input formControlName="Country" class="form-control">
-        <small *ngIf="showError && signUpForm.controls.Country.invalid" class="text-danger">{{ 'REQUIRED_INPUT' | translate }}</small>
-      </div>
-
-      <div class="col-md-6 mt-3">
-        <label>{{ 'CITY' | translate }}</label>
-        <input formControlName="City" class="form-control">
-        <small *ngIf="showError && signUpForm.controls.City.invalid" class="text-danger">{{ 'REQUIRED_INPUT' | translate }}</small>
-      </div>
-
-      <div class="col-md-6 mt-3">
-        <label>{{ 'DISTRICT' | translate }}</label>
-        <input formControlName="District" class="form-control">
-        <small *ngIf="showError && signUpForm.controls.District.invalid" class="text-danger">{{ 'REQUIRED_INPUT' | translate }}</small>
-      </div>
-
-      <div class="col-md-6 mt-3">
-        <label>{{ 'ZIP_CODE' | translate }}</label>
-        <input type="number" formControlName="ZipCode" class="form-control">
-        <small *ngIf="showError && signUpForm.controls.ZipCode.invalid" class="text-danger">{{ 'REQUIRED_INPUT' | translate }}</small>
-      </div>
-
-      <div class="col-md-6 mt-3">
-        <label>{{ 'LOCATION_NAME' | translate }}</label>
-        <input formControlName="LocationName" class="form-control" placeholder="{{ 'LOCATION_NAME' | translate }}">
-        <small *ngIf="showError && signUpForm.controls.LocationName.invalid" class="text-danger">{{ 'REQUIRED_INPUT' | translate }}</small>
-
-      </div>
-  
-      <div class="col-md-6 mt-3">
-        <label>{{ 'LOCATION_TYPE' | translate }}</label>
-        <select formControlName="LocationType" class="form-select pointer">
-          <option class="pointer" value="" disabled selected>{{ 'CHOOSE' | translate }}</option>
-          <ng-container *ngFor="let option of locationTypeOptions">
-            <option class="pointer" [ngValue]="option.value">{{ option.label | translate }}</option>
-          </ng-container>
-        </select>
-        <small *ngIf="showError && signUpForm.controls.LocationType.invalid" class="text-danger">{{ 'REQUIRED_INPUT' | translate }}</small>
-      </div>
-
-     
-  
-      <div class="col-12 mt-3">
-        <label>{{ 'ADDRESS_TEXT' | translate }}</label>
-        <textarea formControlName="AddressText" class="form-control" rows="2"></textarea>
-        <small *ngIf="showError && signUpForm.controls.AddressText.invalid" class="text-danger">{{ 'REQUIRED_INPUT' | translate }}</small>
-
-      </div>
-  
-      <!-- Agreements -->
-      <div class="col-md-6 mt-4">
-        <input type="checkbox" formControlName="IsUsageRulesConfirm" id="isUsageRulesConfirm">
-        <small for="isUsageRulesConfirm">&nbsp;{{ 'USAGE_RULES_TITLE' | translate }}</small>
-        <small *ngIf="showError && signUpForm.controls.IsUsageRulesConfirm.invalid" class="text-danger">{{ 'REQUIRED_INPUT' | translate }}</small>
-
-      </div>
-  
-      <div class="col-md-6 mt-4">
-        <input type="checkbox" formControlName="IsContractConfirm" id="isContractConfirm">
-        <small for="isContractConfirm">&nbsp;{{ 'CONTRACT_CONFIRM_TITLE' | translate }}</small>
-        <small *ngIf="showError && signUpForm.controls.IsContractConfirm.invalid" class="text-danger">{{ 'REQUIRED_INPUT' | translate }}</small>
-
-      </div>
-  
-      <div class="form-group row mt-1 center">
-        <div class="d-grid gap-2 mt-3">
-            <button class="button btn btn-danger" type="submit">{{ 'SIGNUP' | translate }}</button>
+        <div class="field-group">
+          <label>E-posta</label>
+          <input type="email" formControlName="email" placeholder="ornek@mail.com" autocomplete="email" />
+          <span class="field-error" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+            Geçerli bir e-posta girin.
+          </span>
         </div>
-    </div>
 
-  
-    <div class="col-12 text-center mt-2" *ngIf="errMsg">
-    <small class="text-danger">{{ errMsg }}</small>
-    </div>
-    </div>
-    <app-language></app-language>
+        <div class="field-row">
+          <div class="field-group">
+            <label>Telefon <span class="optional">(isteğe bağlı)</span></label>
+            <input type="tel" formControlName="phone" placeholder="+90 555 000 0000" />
+          </div>
+          <div class="field-group">
+            <label>Şifre</label>
+            <input type="password" formControlName="password" placeholder="En az 6 karakter" autocomplete="new-password" />
+            <span class="field-error" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+              Şifre en az 6 karakter olmalı.
+            </span>
+          </div>
+        </div>
 
-  </form>
-  
+        <div class="alert-error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+        <button type="submit" [disabled]="loading" class="btn-submit">
+          <span *ngIf="!loading">Kayıt Ol</span>
+          <span *ngIf="loading" class="loading-dots">Kayıt yapılıyor</span>
+        </button>
+      </form>
+
+      <div class="auth-link">
+        Hesabın var mı? <a routerLink="/auth/login">Giriş Yap</a>
+      </div>
+    </div>
+  </div>
+</div>

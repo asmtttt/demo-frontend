@@ -1,63 +1,178 @@
-.btn-circle {
-    border-radius: 100%;
-    border-color:#3A3B3C;
-    background-color: #3A3B3C;
+.top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 64px;
+  background: #e63946;
+  border-bottom: 1px solid rgba(0,0,0,0.15);
+  position: sticky;
+  top: 0;
+  z-index: 200;
 }
 
-.btn-circle:hover {
-    background-color: #5b5c5d ;
+/* ===== BRAND ===== */
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
 }
 
-i {
-    color:white;
+.brand-logo {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
 }
 
-/* .modal {
-    width:400px;
-} */
-
-
-/* .nav-link:hover {
-    background-color: white !important; 
-    color: red !important; 
+.brand-name {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 1px;
 }
 
-.nav-link:hover i {
-    color: red !important; 
-} */
-
-
-.nav-link {
-    position: relative; /* Pozisyon ayarlaması için relative kullanılır */
-    display: inline-block; /* İçeriği düzgün hizalamak için */
-    overflow: hidden; /* Çizgi dışına taşmamalı */
+/* ===== NAV LINKS ===== */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-.nav-link::after {
-    content: ''; /* Psödo eleman için içerik */
-    position: absolute; /* Psödo elemanı konumlandırma */
-    bottom: 0; /* Alt kısma yerleştirme */
-    left: 50%; /* Sol tarafı ortala */
-    width: 0%; /* Başlangıç genişliği 0 */
-    height: 2px; /* Çizginin kalınlığı */
-    background-color: white; /* Çizginin rengi */
-    transition: width 0.6s ease; /* Genişlik için geçiş animasyonu */
+.nav-links a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+  white-space: nowrap;
 }
 
-.nav-link:hover::after {
-    width: 100%; /* Hover durumunda çizginin genişliğini tam yap */
-    transform: translateX(-50%); /* X ekseninde merkezle */
+.nav-links a:hover { background: rgba(0,0,0,0.15); color: #fff; }
+.nav-links a.active { background: rgba(0,0,0,0.25); color: #fff; font-weight: 700; }
+.nav-links a .material-icons { font-size: 18px; }
+
+/* ===== USER AREA ===== */
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
 }
 
+.user-name {
+  color: rgba(255,255,255,0.65);
+  font-size: 13px;
+  font-weight: 500;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-/* Örnek navbar sınıfı kullanarak */
-.navbar-custom {
-    background-image: url('/assets/images/build-4.png'); /* Arka plan resmi */
-    background-size: cover; /* Resmin tam sığması için */
-    background-position: center; /* Resmi ortala */
+.nav-user a {
+  color: rgba(255,255,255,0.65);
+  font-size: 26px;
+  text-decoration: none;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+}
+.nav-user a:hover { color: #fff; }
+
+.logout-btn {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.65);
+  font-size: 26px;
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+}
+.logout-btn:hover { color: #ff6b5b; }
+
+/* ===== HAMBURGER ===== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  width: 36px;
+  height: 36px;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: rgba(255,255,255,0.8);
+  border-radius: 2px;
+  transition: all 0.25s;
+  transform-origin: center;
+}
+
+.hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ===== OVERLAY ===== */
+.nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 150;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .top-nav { padding: 0 16px; height: 56px; }
+
+  .user-name { display: none; }
+
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    position: fixed;
+    top: 56px;
+    left: 0;
+    right: 0;
+    background: #e63946;
+    border-bottom: 1px solid rgba(0,0,0,0.15);
+    z-index: 180;
+    padding: 8px 0;
+    transform: translateY(-120%);
+    transition: transform 0.3s ease;
   }
-  
-  .selected-language {
-    background-color: light;
+
+  .nav-links.open {
+    transform: translateY(0);
   }
-  
+
+  .nav-links a {
+    padding: 14px 24px;
+    border-radius: 0;
+    font-size: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .hamburger { display: flex; }
+
+  .nav-overlay { display: block; }
+}

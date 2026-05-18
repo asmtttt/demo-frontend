@@ -1,9 +1,9 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { TokenService } from '../services/token.service';
+import { AuthService } from '../services/auth.service';
 
-export const loginGuard: CanActivateFn = (route, state) => {
-  return inject(TokenService).isAuthenticated() //TODO Local Storage Temizlenecek Authenticated Değilse
+export const loginGuard: CanActivateFn = () => {
+  return inject(AuthService).session$.value
     ? inject(Router).createUrlTree(['/'])
     : true;
 };

@@ -1,88 +1,110 @@
-import { Component, AfterViewInit, NgZone } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
-import { MapService } from 'src/app/core/services/map.service';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import * as L from 'leaflet';
+import { Building } from 'src/app/core/models/building.model';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { BuildingService } from 'src/app/core/services/building.service';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements AfterViewInit {
-  constructor(private mapService: MapService,
-    private router: Router,
-    private ngZone: NgZone) { }
+export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
+  private map!: L.Map;
+  private markers = new Map<string, L.Marker>();
+  private realtimeChannel: any;
 
-  operations = [
-    { id: 1, name: 'Create Build' },
-    { id: 2, name: 'Update Build' },
-    { id: 3, name: 'Delete Build' }
-  ];
+  buildings: Building[] = [];
+  selectedBuilding: Building | null = null;
+  filterCity = '';
+  filterDistrict = '';
 
-  simulations = [
-    { id: 1, name: 'Simulate Earthquake' },
-    { id: 2, name: 'Simulate Weather' },
-    { id: 3, name: 'Simulate Economy' }
-  ];
+  constructor(private buildingService: BuildingService, public authService: AuthService) {}
 
-  reports = [
-    { id: 1, name: 'All Builds' },
-    { id: 2, name: 'Quarterly Report' },
-    { id: 3, name: 'Monthly Report' }
-  ];
-
-  filter = {
-    buildingName: '',
-    city: '',
-    district: ''
-  };
-
-  // ngAfterViewInit(): void {
-  //   this.mapService.initializeMap('map', [40.7128, -74.0060], 13); // New York City koordinatları ve zoom seviyesi
-  //   this.addInitialFeatures();
-  // }
-
-  ngOnInit(){
-    this.mapService.initializeMap('map', [41.0082, 28.9784], 11); // New York City koordinatları ve zoom seviyesi
-    this.mapService.loadBuildings(); // Statik bina verilerini yükle
+  async ngOnInit() {
+    await this.loadBuildings();
+    this.subscribeRealtime();
   }
 
-  ngAfterViewInit(): void {
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.ngZone.runOutsideAngular(() => {
-          setTimeout(() => {
-            this.mapService.initializeMap('map', [41.0082, 28.9784], 13);
-            this.mapService.loadBuildings();
-            this.mapService.invalidateMapSize();
-          }, 50); // 50ms küçük bir bekleme süresi DOM için
-        });
+  ngAfterViewInit() {
+    setTimeout(() => this.initMap(), 100);
+  }
+
+  private initMap() {
+    this.map = L.map('map', { center: [39.9334, 32.8597], zoom: 6 });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    }).addTo(this.map);
+    this.renderMarkers();
+  }
+
+  private async loadBuildings() {
+    this.buildings = this.authService.isAdmin
+      ? await this.buildingService.getAllBuildings()
+      : await this.buildingService.getMyBuildings();
+  }
+
+  private renderMarkers() {
+    this.markers.forEach(m => m.remove());
+    this.markers.clear();
+
+    const filtered = this.buildings.filter(b =>
+      (!this.filterCity || b.city?.toLowerCase().includes(this.filterCity.toLowerCase())) &&
+      (!this.filterDistrict || b.district?.toLowerCase().includes(this.filterDistrict.toLowerCase()))
+    );
+
+    filtered.forEach(b => {
+      const color = b.status === 'standing' ? '#27ae60' : b.status === 'damaged' ? '#e67e22' : '#e74c3c';
+      const icon = L.divIcon({
+        className: '',
+        html: `<div style="width:14px;height:14px;border-radius:50%;background:${color};border:2px solid #fff;box-shadow:0 2px 4px rgba(0,0,0,0.3)"></div>`,
+        iconSize: [14, 14],
+        iconAnchor: [7, 7]
       });
+
+      const marker = L.marker([b.lat, b.lng], { icon })
+        .addTo(this.map)
+        .on('click', () => this.selectedBuilding = b);
+
+      this.markers.set(b.id, marker);
+    });
   }
 
-  private addInitialFeatures(): void {
-    const marker = this.mapService.addMarker([40.7128, -74.0060]);
-    const polygonCoordinates: L.LatLngExpression[] = [
-      [40.7138, -74.0060],
-      [40.7138, -74.0070],
-      [40.7128, -74.0070]
-    ];
-    const polygon = this.mapService.addPolygon(polygonCoordinates);
-    
-    // Örnek olarak 10 saniye sonra eklenen özellikleri temizle
-    setTimeout(() => {
-      this.mapService.removeLayer(marker);
-      this.mapService.removeLayer(polygon);
-    }, 10000);
-  }
-
-  onItemClick(item: any) {
-    console.log('Item clicked:', item);
+  private subscribeRealtime() {
+    this.realtimeChannel = this.buildingService.subscribeToBuildings(updated => {
+      const idx = this.buildings.findIndex(b => b.id === updated.id);
+      if (idx >= 0) {
+        this.buildings[idx] = { ...this.buildings[idx], ...updated };
+        if (this.selectedBuilding?.id === updated.id) {
+          this.selectedBuilding = this.buildings[idx];
+        }
+      }
+      this.renderMarkers();
+    });
   }
 
   applyFilter() {
-    console.log("Filtre uygulandı:", this.filter);
-    // Burada filtreleme işlemini haritadaki binalara uygula
+    this.renderMarkers();
+  }
+
+  closePanel() {
+    this.selectedBuilding = null;
+  }
+
+  get standingCount()  { return this.buildings.filter(b => b.status === 'standing').length; }
+  get damagedCount()   { return this.buildings.filter(b => b.status === 'damaged').length; }
+  get destroyedCount() { return this.buildings.filter(b => b.status === 'destroyed').length; }
+
+  statusLabel(s: string) {
+    return s === 'standing' ? 'Ayakta' : s === 'damaged' ? 'Hasarlı' : 'Yıkık';
+  }
+
+  statusClass(s: string) {
+    return s === 'standing' ? 'green' : s === 'damaged' ? 'orange' : 'red';
+  }
+
+  ngOnDestroy() {
+    this.realtimeChannel?.unsubscribe();
+    this.map?.remove();
   }
 }

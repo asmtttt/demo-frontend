@@ -1,42 +1,43 @@
-body,html {
-    height:100vh!important;
-    width:100vw;
-    font-family: 'Quicksand', sans-serif!important;
-    letter-spacing: 1px;
-    padding:0;
+:root {
+  /* === SAYFA ZEMİNİ: LACİVERT === */
+  --bg:         #0d1b2a;
+  --bg-surface: #1a2d3d;
+  --bg-raised:  #243b50;
+  --bg-hover:   #2d4a62;
+
+  /* === SINIR === */
+  --border: rgba(99, 179, 237, 0.1);
+
+  /* === METİN === */
+  --text:       #f0f4f8;
+  --text-dim:   #a0b4c4;
+  --text-muted: #6b8a9e;
+
+  /* === ANA RENK: KIRMIZI === */
+  --red:        #e63946;
+  --red-dark:   #c1121f;
+  --red-light:  rgba(230, 57, 70, 0.15);
 }
 
-input::placeholder {
-    font-size: smaller;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body, html {
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  letter-spacing: 0;
 }
 
+a { text-decoration: none !important; }
+
+.material-icons {
+  font-size: inherit;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+input::placeholder { font-size: 14px; }
 input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-}
-
-.form-control {
-    transition: none!important;
-}
-
-a {
-    text-decoration: none!important;
-}
-
-.required-color, .error-color {
-    color: #de3535;
-}
-input::placeholder {
-    font-size: smaller;
-}
-
-:host ::ng-deep .modal-backdrop.show {
-    opacity: 0.7 !important;  /* Daha koyu bir arka plan için opaklık değerini artırın */
-    background-color: #000;  /* Arka plan rengini siyah olarak belirleyin */
-  }
+input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+input[type=number] { -moz-appearance: textfield; }

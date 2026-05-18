@@ -1,75 +1,136 @@
-<div class="container-fluid vh-100 p-0">
-    <div class="row flex-nowrap">
-        <!-- sidebar  %20 olmalı -->
-        <div class="bg-light" style="width: 20%; height: 100%;">
-            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-4 w-100">
-            
-            <h6 class="text-dark mb-4" style="text-align: center;">Filters</h6>
-            
-            <input type="text" class="form-control mb-2" placeholder="Bina Adı">
-            
-            <input type="text" class="form-control mb-2" placeholder="Şehir">
-            
-            <input type="text" class="form-control mb-3" placeholder="İlçe">
-            
-            <button class="btn btn-secondary w-100" (click)="applyFilter()">Filtrele</button>
-        
-            </div>
-        </div>
-  
-        <!-- main %80 -->
-        <div class="col py-3" style="width: 80%; height: 100%;">
-            <!-- header -->
-            <header class="d-flex justify-content-between align-items-center pb-3 mb-4 border-bottom" style="width: 100% !important; height: 10% !important;">
-                <input type="text" class="form-control w-50" placeholder="Arama yap...">
+<div class="map-page">
 
-                <div class="btn-group">
-                    <div class="operations me-2">
-                        <button type="button" class="btn btn-danger dropdown-toggle" id="operationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            Operasyonlar
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="operationsDropdown">
-                            <li *ngFor="let operation of operations" (click)="onItemClick(operation)">
-                                <a class="dropdown-item" href="#">{{ operation.name }}</a>
-                            </li>
-                        </ul>
-                    </div>
-                
-                    <div class="simulations me-2">
-                        <button type="button" class="btn btn-danger dropdown-toggle" id="simulationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            Simülasyonlar
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="simulationDropdown">
-                            <li *ngFor="let simulation of simulations" (click)="onItemClick(simulation)">
-                                <a class="dropdown-item" href="#">{{ simulation.name }}</a>
-                            </li>
-                        </ul>
-                    </div>
-                
-                    <div class="reports">
-                        <button type="button" class="btn btn-danger dropdown-toggle" id="reportsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            Raporlar
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="reportsDropdown">
-                            <li *ngFor="let report of reports" (click)="onItemClick(report)">
-                                <a class="dropdown-item" href="#">{{ report.name }}</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                
-                  
-            </header>
-            <!-- map -->
-            <body style="width: 100% !important; height: 80% !important;">
-                <div id="map" style="height: 500px; border: 2px solid red; overflow: hidden;"></div>
-            </body>
-            <!-- footer  -->
-            <footer class="footer mt-auto py-3 bg-light" style="width: 100% !important; height: 10% !important;">
-                <div class="container text-center">
-                    <span class="text-muted">Tüm hakları saklıdır © 2025</span>
-                </div>
-            </footer>
-        </div>
+  <!-- Sol: Filtre sidebar -->
+  <div class="map-sidebar">
+    <div class="sidebar-section">
+      <h3>Harita Filtresi</h3>
+      <div class="legend">
+        <div class="legend-item"><span class="dot green"></span> Ayakta</div>
+        <div class="legend-item"><span class="dot orange"></span> Hasarlı</div>
+        <div class="legend-item"><span class="dot red"></span> Yıkık</div>
+      </div>
     </div>
+
+    <div class="sidebar-section">
+      <div class="filter-group">
+        <label>Şehir</label>
+        <input type="text" [(ngModel)]="filterCity" placeholder="İstanbul" />
+      </div>
+      <div class="filter-group">
+        <label>İlçe</label>
+        <input type="text" [(ngModel)]="filterDistrict" placeholder="Kadıköy" />
+      </div>
+      <button (click)="applyFilter()" class="btn-filter">
+        <span class="material-icons">search</span> Filtrele
+      </button>
+    </div>
+
+    <div class="sidebar-section stats-mini" *ngIf="buildings.length > 0">
+      <div class="mini-stat">
+        <span class="dot green"></span>
+        <span>{{ standingCount }} Ayakta</span>
+      </div>
+      <div class="mini-stat">
+        <span class="dot orange"></span>
+        <span>{{ damagedCount }} Hasarlı</span>
+      </div>
+      <div class="mini-stat">
+        <span class="dot red"></span>
+        <span>{{ destroyedCount }} Yıkık</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Orta: Harita -->
+  <div id="map"></div>
+
+  <!-- Sağ: Bina detay panel (bina tıklanınca açılır) -->
+  <div class="building-detail-panel" [class.open]="selectedBuilding">
+    <ng-container *ngIf="selectedBuilding">
+      <div class="detail-header">
+        <div class="detail-title-row">
+          <span class="material-icons detail-bldg-icon">apartment</span>
+          <h3>{{ selectedBuilding.name }}</h3>
+        </div>
+        <button class="close-btn" (click)="closePanel()">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+
+      <div class="detail-status-bar" [class]="'status-' + selectedBuilding.status">
+        <span class="material-icons">
+          {{ selectedBuilding.status === 'standing' ? 'check_circle' : selectedBuilding.status === 'damaged' ? 'warning' : 'dangerous' }}
+        </span>
+        <span>{{ statusLabel(selectedBuilding.status) }}</span>
+      </div>
+
+      <div class="detail-damage-section">
+        <div class="damage-label-row">
+          <span>Hasar Skoru</span>
+          <strong [class]="'dmg-' + selectedBuilding.status">{{ selectedBuilding.damage_score }}%</strong>
+        </div>
+        <div class="damage-track">
+          <div class="damage-fill"
+               [style.width.%]="selectedBuilding.damage_score"
+               [class.high]="selectedBuilding.damage_score >= 75"
+               [class.mid]="selectedBuilding.damage_score >= 40 && selectedBuilding.damage_score < 75"></div>
+        </div>
+      </div>
+
+      <div class="detail-grid">
+        <div class="detail-item">
+          <span class="material-icons">people</span>
+          <div>
+            <div class="di-label">Anlık Kişi</div>
+            <div class="di-value">{{ selectedBuilding.current_occupancy }}</div>
+          </div>
+        </div>
+        <div class="detail-item">
+          <span class="material-icons">layers</span>
+          <div>
+            <div class="di-label">Kat Sayısı</div>
+            <div class="di-value">{{ selectedBuilding.floor_count ?? '-' }}</div>
+          </div>
+        </div>
+        <div class="detail-item">
+          <span class="material-icons">foundation</span>
+          <div>
+            <div class="di-label">Yapı Tipi</div>
+            <div class="di-value">{{ selectedBuilding.building_type ?? '-' }}</div>
+          </div>
+        </div>
+        <div class="detail-item">
+          <span class="material-icons">calendar_today</span>
+          <div>
+            <div class="di-label">İnşaat Yılı</div>
+            <div class="di-value">{{ selectedBuilding.construction_year ?? '-' }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-address" *ngIf="selectedBuilding.address || selectedBuilding.city">
+        <span class="material-icons">location_on</span>
+        <div>
+          <div class="di-label">Adres</div>
+          <div class="di-value address-text">
+            {{ selectedBuilding.address }}
+            <span *ngIf="selectedBuilding.city">, {{ selectedBuilding.city }}</span>
+            <span *ngIf="selectedBuilding.district"> / {{ selectedBuilding.district }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-coords">
+        <span class="material-icons">my_location</span>
+        <div>
+          <div class="di-label">Koordinat</div>
+          <div class="di-value coords-text">{{ selectedBuilding.lat | number:'1.4-4' }}, {{ selectedBuilding.lng | number:'1.4-4' }}</div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Overlay (mobilde sağ panel açıkken) -->
+  <div class="panel-overlay" *ngIf="selectedBuilding" (click)="closePanel()"></div>
+
 </div>

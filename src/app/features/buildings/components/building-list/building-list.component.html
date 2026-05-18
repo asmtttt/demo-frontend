@@ -1,0 +1,76 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h2>Binalar</h2>
+      <p>{{ buildings.length }} bina kayıtlı</p>
+    </div>
+    <button (click)="showForm = !showForm" class="btn-primary">
+      <span class="material-icons">{{ showForm ? 'close' : 'add' }}</span>
+      {{ showForm ? 'Kapat' : 'Yeni Bina' }}
+    </button>
+  </div>
+
+  <app-building-form *ngIf="showForm" (saved)="onFormSaved()"></app-building-form>
+
+  <div class="loading" *ngIf="loading">
+    <span class="material-icons spin">refresh</span> Yükleniyor...
+  </div>
+
+  <div class="empty" *ngIf="!loading && buildings.length === 0">
+    <span class="material-icons">apartment</span>
+    <p>Henüz bina eklenmemiş.</p>
+    <button (click)="showForm = true" class="btn-primary">+ İlk Binayı Ekle</button>
+  </div>
+
+  <div class="table-wrapper" *ngIf="!loading && buildings.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>Bina Adı</th>
+          <th class="hide-sm">Şehir / İlçe</th>
+          <th class="hide-md">Kat</th>
+          <th class="hide-md">Yapı Tipi</th>
+          <th class="hide-sm">Kişi</th>
+          <th class="hide-md">Hasar</th>
+          <th>Durum</th>
+          <th *ngIf="authService.isAdmin" class="hide-sm">Sahip</th>
+          <th>İşlem</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let b of buildings">
+          <td>
+            <div class="building-name">{{ b.name }}</div>
+            <div class="building-sub hide-lg">{{ b.city }}{{ b.district ? ' / ' + b.district : '' }}</div>
+          </td>
+          <td class="hide-sm">{{ b.city }}<span *ngIf="b.district"> / {{ b.district }}</span></td>
+          <td class="hide-md">{{ b.floor_count ?? '-' }}</td>
+          <td class="hide-md">{{ b.building_type ?? '-' }}</td>
+          <td class="hide-sm">
+            <span class="occupancy-badge">
+              <span class="material-icons">person</span>{{ b.current_occupancy }}
+            </span>
+          </td>
+          <td class="hide-md">
+            <div class="damage-wrap">
+              <div class="damage-track">
+                <div class="damage-fill"
+                     [style.width.%]="b.damage_score"
+                     [class.high]="b.damage_score >= 75"
+                     [class.mid]="b.damage_score >= 40 && b.damage_score < 75"></div>
+              </div>
+              <span class="damage-pct">{{ b.damage_score }}%</span>
+            </div>
+          </td>
+          <td><span class="badge" [ngClass]="statusClass(b.status)">{{ statusLabel(b.status) }}</span></td>
+          <td *ngIf="authService.isAdmin" class="hide-sm">{{ b.profiles?.full_name }}</td>
+          <td>
+            <button (click)="deleteBuilding(b.id)" class="btn-delete" title="Sil">
+              <span class="material-icons">delete</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

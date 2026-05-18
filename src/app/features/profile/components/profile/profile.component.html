@@ -1,73 +1,85 @@
-<!-- profile.component.html -->
-<div *ngIf="user" class="container mt-5">
-    <div class="row justify-content-center">
-      <!-- Profile Photo Card -->
-      <div class="col-md-4 mb-3">
-        <div class="card shadow rounded-lg p-3 text-center">
-          <div class="card-body">
-            <img src="assets/images/free-profile-photo.png" alt="Profile Photo" class="img-fluid rounded" style="max-height: 150px;">
-          </div>
-        </div>
-      </div>
-      
-    </div>
-    <div class="row justify-content-center">
-        <!-- Name, Surname, and General Information Card -->
-      <div class="col-md-4">
-        <div class="card shadow rounded-lg p-3">
-          <div class="card-header">
-            <h3 class="card-title text-center" style="text-transform: capitalize;">{{ user.Name + ' ' + user.LastName }}</h3>
-          </div>
-          <div class="card-body">
-            <p class="card-text">{{ 'USERNAME' | translate }}: <span class="text-danger">{{ user.UserName }}</span></p>
-            <p class="card-text">{{ 'EMAIL' | translate }}: <span class="text-danger">{{ user.Mail }}</span></p>
-            <p class="card-text">{{ 'GENDER' | translate }}: <span class="text-danger">{{ user.Gender }}</span></p>
-            <p class="card-text">{{ 'BIRTH_DATE' | translate }}: <span class="text-danger">{{ user.BirthDate | date:'longDate' }}</span></p>
-            <div class="text-center">
-              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addressesModal">
-                {{ 'SHOW_ADDRESSES' | translate }}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="profile-page">
+
+  <div class="profile-topbar">
+    <h2>Profilim</h2>
+    <p>Hesap bilgilerinizi yönetin</p>
   </div>
-  
-  <!-- Addresses Modal -->
-  <div class="modal fade" id="addressesModal" tabindex="-1" aria-labelledby="addressesModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered custom-modal-width">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addressesModalLabel">{{ 'ADDRESSES' | translate }}</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+  <div class="profile-layout">
+
+    <!-- Sol: Kullanıcı kartı -->
+    <div class="user-card">
+      <div class="avatar-wrap">
+        <div class="avatar">{{ authService.currentProfile?.full_name?.[0]?.toUpperCase() ?? '?' }}</div>
+        <div class="avatar-glow"></div>
+      </div>
+      <h3 class="user-fullname">{{ authService.currentProfile?.full_name }}</h3>
+      <p class="user-email">{{ authService.currentUser?.email }}</p>
+      <span class="role-badge" [class.admin-badge]="authService.currentProfile?.role === 'admin'">
+        <span class="material-icons">{{ authService.currentProfile?.role === 'admin' ? 'admin_panel_settings' : 'person' }}</span>
+        {{ authService.currentProfile?.role === 'admin' ? 'Yönetici' : 'Kullanıcı' }}
+      </span>
+
+      <div class="user-stats">
+        <div class="user-stat">
+          <span class="material-icons">calendar_today</span>
+          <div>
+            <div class="stat-label">Üyelik</div>
+            <div class="stat-val">{{ authService.currentProfile?.created_at | date:'dd.MM.yyyy' }}</div>
+          </div>
         </div>
-        <div class="modal-body">
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">{{ 'NAME' | translate }}</th>
-                <th scope="col">{{ 'ADDRESS' | translate }}</th>
-                <th scope="col">{{ 'DISTRICT' | translate }}</th>
-                <th scope="col">{{ 'CITY' | translate }}</th>
-                <th scope="col">{{ 'ZIP_CODE' | translate }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="capitalize" *ngFor="let address of user?.Addresses; let i = index">
-                <td>{{ address.Name }}</td>
-                <td>{{ address.AddressText }}</td>
-                <td>{{ address.District }}</td>
-                <td>{{ address.City }}</td>
-                <td>{{ address.ZipCode }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="modal-footer justify-content-end">
-          <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">{{ 'CLOSE' | translate }}</button>
+        <div class="user-stat" *ngIf="authService.currentProfile?.phone">
+          <span class="material-icons">phone</span>
+          <div>
+            <div class="stat-label">Telefon</div>
+            <div class="stat-val">{{ authService.currentProfile?.phone }}</div>
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- Sağ: Düzenleme formu -->
+    <div class="edit-card">
+      <div class="edit-card-header">
+        <span class="material-icons">edit</span>
+        <h3>Bilgileri Düzenle</h3>
+      </div>
+
+      <div class="alert-success" *ngIf="successMessage">
+        <span class="material-icons">check_circle</span> {{ successMessage }}
+      </div>
+
+      <form #profileForm="ngForm" (ngSubmit)="saveProfile(nameInput.value, phoneInput.value)">
+        <div class="field-group">
+          <label>Ad Soyad</label>
+          <div class="input-wrap">
+            <span class="material-icons input-icon">badge</span>
+            <input #nameInput type="text" [value]="authService.currentProfile?.full_name ?? ''" required placeholder="Adınız Soyadınız" />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>E-posta <span class="readonly-badge">Salt okunur</span></label>
+          <div class="input-wrap readonly">
+            <span class="material-icons input-icon">email</span>
+            <input type="email" [value]="authService.currentUser?.email ?? ''" disabled />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Telefon</label>
+          <div class="input-wrap">
+            <span class="material-icons input-icon">phone</span>
+            <input #phoneInput type="tel" [value]="authService.currentProfile?.phone ?? ''" placeholder="+90 555 000 0000" />
+          </div>
+        </div>
+
+        <button type="submit" [disabled]="saving" class="btn-save">
+          <span class="material-icons">{{ saving ? 'hourglass_empty' : 'save' }}</span>
+          {{ saving ? 'Kaydediliyor...' : 'Değişiklikleri Kaydet' }}
+        </button>
+      </form>
+    </div>
+
   </div>
-  
+</div>

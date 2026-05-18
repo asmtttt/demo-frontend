@@ -3,34 +3,27 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './components/login/login.component';
 import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './components/register/register.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LanguageComponent } from '../language/components/language/language.component';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
-import { SharedModule } from 'src/app/shared/shared.module';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'resetPassword', component: ResetPasswordComponent }
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
 
 @NgModule({
   declarations: [
     LoginComponent,
     RegisterComponent,
-    ResetPasswordComponent,
-    LanguageComponent
+    ResetPasswordComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    TranslateModule,
     FormsModule,
-    ReactiveFormsModule,
-    NgbTooltipModule,
-    SharedModule
+    ReactiveFormsModule
   ]
 })
 export class AuthModule { }

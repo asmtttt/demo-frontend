@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -8,12 +7,4 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent {
   title = 'test-project';
-
-  /**
-   *
-   */
-  constructor(translate: TranslateService) {
-    translate.setDefaultLang('tr');
-    translate.use('tr'); 
-  }
 }

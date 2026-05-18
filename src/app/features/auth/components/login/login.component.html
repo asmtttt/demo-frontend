@@ -1,72 +1,68 @@
-<!-- Login Yapısı -->
-<form class="border" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <div class="row justify-content-center">
-    <img src="/assets/images/amfy-logo-5.png" alt="">
-  </div>
-  <div class="form-group row mt-3">
-    <div class="text-center">
-        <h3 class="mt-1">{{'LOGIN' | translate}}</h3>
-        <hr style="width:50%; margin: auto;">
-    </div>
-  </div>
-  <div class="form-group row mt-1">
-    <label style="margin-top: 5%;"><small>{{'EMAIL' | translate}}</small></label>
-    <input class="form-control border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0" 
-    type="text" style="border: 1px solid bottom!important;"
-    placeholder="{{ 'PLEASE_ENTER_EMAIL' | translate }}" id="username" name="username" class="form-control" formControlName="email">
-    <small class="required-color" *ngIf="showError && (loginForm.controls.email.invalid || loginForm.controls.email.errors?.required)">{{ 'REQUIRED_INPUT' | translate }}</small>
-  </div>
-  <div class="form-group row mt-2">
-    <label><small>{{'PASSWORD' | translate}}</small></label>
-    <input class="form-control mt-2 border-top-0 border-end-0 border-2 border-start-0 border-dark rounded-0" formControlName="password"
-    type="password" placeholder="{{ 'PLEASE_ENTER_PASSWORD' | translate }}"
-    id="password" name="password" class="form-control">
-    <small class="required-color" *ngIf="showError && loginForm.controls.password.errors?.required">{{ 'REQUIRED_INPUT' | translate }}</small>
-    <small class="required-color" *ngIf="showError && loginForm.controls.password.invalid && !loginForm.controls.password.errors?.required">{{ 'PASSWORD_RULES' | translate }}*</small>
-  </div>
-
-  <div class="col-12 text-center mt-2 messageText">
-    <small class="text-danger" *ngIf="responseMessage.messageType == MessageType.Information" style="visibility: hidden;"></small>
-    <small class="text-danger" *ngIf="responseMessage.messageType == MessageType.Error"  style="visibility: visible;"  >{{ responseMessage.message }}</small>
-    <small class="text-success" *ngIf="responseMessage.messageType == MessageType.Success" style="visibility: visible;" >{{ responseMessage.message }}</small>
-  </div>
-  
-  <div class="form-group row mt-2">
-    <div class="form-check col align-items-center d-flex">
-      <input class="form-check-input cursor" type="checkbox" value="" id="flexCheckDefault">
-      <label class="form-check-label small text-dark mt-1 cursor" id="remember_me" for="flexCheckDefault" style="margin-left:5px;">
-        {{ 'REMEMBER_ME' | translate }}
-      </label> 
-    </div>
-    <div class="form-check col align-items-center text-end"><a [routerLink]="['/auth/resetPassword']">
-        <span class="display-inline text-dark small" id="forgot_password">{{ 'FORGOT_PASSWORD' | translate }}</span></a></div>
-  </div>
-  <div class="form-group row mt-2">
-    <div class="d-grid gap-2 mt-2">
-      <button class="button btn btn-danger" type="submit">{{ 'LOGIN' | translate }}</button>
-    </div>
-    <div class="d-grid gap-2 mt-2">
-      <button class="button btn btn-light" type="submit" [routerLink]="['/auth/register']">{{ 'NOT_A_REMEMBER_YET' | translate }}</button>
-    </div>
-  </div>
-
-  <app-language></app-language>
-</form>
-
-
-<!-- Error Message Modal -->
-<div class="modal fade" [class.show]="showModal" [style.display]="showModal ? 'block' : 'none'" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true" role="dialog">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="errorModalLabel">{{ 'ERROR' | translate }}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="toggleModal()"></button>
+<div class="auth-layout">
+  <div class="auth-panel-left">
+    <div class="left-content">
+      <img src="assets/images/amfy-logo-4.png" alt="Disaster Logo" class="brand-logo" />
+      <h1 class="brand-title">Disaster</h1>
+      <p class="brand-subtitle">Deprem Analiz ve Yönetim Sistemi</p>
+      <div class="feature-list">
+        <div class="feature-item">
+          <span class="feature-icon material-icons">map</span>
+          <span>Anlık bina durumu haritası</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon material-icons">crisis_alert</span>
+          <span>Deprem simülasyonu ve analiz</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon material-icons">groups</span>
+          <span>Anlık doluluk takibi</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon material-icons">chat</span>
+          <span>Gerçek zamanlı mesajlaşma</span>
+        </div>
       </div>
-      <div class="modal-body">
-        {{ responseMessage.message }}
+    </div>
+    <div class="left-bg-img" style="background-image: url('assets/images/login-background-photo.jpeg')"></div>
+  </div>
+
+  <div class="auth-panel-right">
+    <div class="auth-form-wrap">
+      <div class="form-header">
+        <h2>Hoşgeldiniz</h2>
+        <p>Hesabınıza giriş yapın</p>
       </div>
-      <div class="modal-footer">
-        <button class="button btn btn-danger" type="button" (click)="toggleModal()">{{ 'CLOSE' | translate }}</button>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="field-group">
+          <label>E-posta</label>
+          <input type="email" formControlName="email" placeholder="ornek@mail.com" autocomplete="email" />
+          <span class="field-error" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+            Geçerli bir e-posta girin.
+          </span>
+        </div>
+
+        <div class="field-group">
+          <label>Şifre</label>
+          <input type="password" formControlName="password" placeholder="••••••••" autocomplete="current-password" />
+          <span class="field-error" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+            Şifre en az 6 karakter olmalı.
+          </span>
+        </div>
+
+        <div class="alert-error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+        <button type="submit" [disabled]="loading" class="btn-submit">
+          <span *ngIf="!loading">Giriş Yap</span>
+          <span *ngIf="loading" class="loading-dots">Giriş yapılıyor</span>
+        </button>
+      </form>
+
+      <div class="auth-link">
+        Hesabın yok mu? <a routerLink="/auth/register">Kayıt Ol</a>
+      </div>
+      <div class="auth-link" style="margin-top: 10px;">
+        <a routerLink="/auth/reset-password">Şifreni mi unuttun?</a>
       </div>
     </div>
   </div>

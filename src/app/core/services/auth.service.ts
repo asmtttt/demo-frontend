@@ -1,89 +1,86 @@
 import { Injectable } from '@angular/core';
-import { LocalService } from './local.service';
-import { PageService } from './page.service';
-import { TokenService } from './token.service';
 import { Router } from '@angular/router';
-import { LoginRequestModel } from 'src/app/features/auth/models/login-request-model';
-import { catchError, Observable, throwError } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ApiService } from './api.service';
-import { RegisterRequestModel } from 'src/app/features/auth/models/register-request-model';
+import { BehaviorSubject } from 'rxjs';
+import { Session, User } from '@supabase/supabase-js';
+import { SupabaseService } from './supabase.service';
+import { Profile } from '../models/profile.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
+  private supabase = this.supabaseService.client;
 
-  constructor(private localService: LocalService, private pageService: PageService, private tokenService: TokenService,
-    private router: Router, private http: HttpClient, private apiService: ApiService) { }
+  session$ = new BehaviorSubject<Session | null>(null);
+  profile$ = new BehaviorSubject<Profile | null>(null);
 
-  
-  login(body: LoginRequestModel): Observable<any> {
-    return this.apiService.postWithoutToken("auth/Login", body).pipe(
-      catchError(this.handleError)
-    );
+  constructor(private supabaseService: SupabaseService, private router: Router) {
+    this.supabase.auth.getSession().then(({ data }) => {
+      this.session$.next(data.session);
+      if (data.session) this.loadProfile(data.session.user.id);
+    });
+
+    this.supabase.auth.onAuthStateChange((_, session) => {
+      this.session$.next(session);
+      if (session) {
+        this.loadProfile(session.user.id);
+      } else {
+        this.profile$.next(null);
+      }
+    });
   }
 
-  private handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      console.error('An error occurred:', error.error.message);
-    } else {
-      console.error(`Backend returned code ${error.status}, body was: `, error.error);
-    }
-    return throwError(() => new Error('Something bad happened; please try again later.'));
+  get currentUser(): User | null {
+    return this.session$.value?.user ?? null;
   }
 
-  setToken(token: string): void {
-    localStorage.setItem('auth_token', token);
+  get currentProfile(): Profile | null {
+    return this.profile$.value;
   }
 
-  getToken(): string {
-    const token = localStorage.getItem('auth_token');
-    return token ? token : '';
+  get isAdmin(): boolean {
+    return this.profile$.value?.role === 'admin';
   }
 
-  removeToken(): void {
-    localStorage.removeItem('auth_token');
+  async signUp(email: string, password: string, fullName: string) {
+    return this.supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { full_name: fullName, role: 'user' } }
+    });
   }
 
-  isLoggedIn(): boolean {
-    return !!this.getToken();
+  async signIn(email: string, password: string) {
+    return this.supabase.auth.signInWithPassword({ email, password });
   }
 
-  logout(): void {
-    localStorage.removeItem('auth_token');
-    this.router.navigate(['auth/login']);
+  async signOut() {
+    await this.supabase.auth.signOut();
+    this.router.navigate(['/auth/login']);
   }
 
-  register(body: RegisterRequestModel): Observable<any> {
-    return this.apiService.postWithoutToken("auth/Register", body).pipe(
-      catchError(this.handleError)
-    );;
+  private async loadProfile(userId: string) {
+    const { data } = await this.supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', userId)
+      .single();
+    this.profile$.next(data);
   }
 
-  setUserInfo(token: string, userId: string, username: string){
-    localStorage.setItem('auth_token', token);
-    localStorage.setItem('user_id', userId);
-    localStorage.setItem('username', username);
+  async updateProfile(updates: Partial<Profile>) {
+    const userId = this.currentUser?.id;
+    if (!userId) return { error: new Error('Oturum açık değil') };
+    const { data, error } = await this.supabase
+      .from('profiles')
+      .update(updates)
+      .eq('id', userId)
+      .select()
+      .single();
+    if (data) this.profile$.next(data);
+    return { data, error };
   }
 
-  clearUserInfo(){
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('user_id');
-    localStorage.removeItem('username');
+  async getAllProfiles(): Promise<Profile[]> {
+    const { data } = await this.supabase.from('profiles').select('*').order('created_at');
+    return data ?? [];
   }
-
-  getLocalStorage(): { [key: string]: string } {
-    let items: { [key: string]: string } = {};
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key !== null) {
-            const value = localStorage.getItem(key) ?? "";
-            items[key] = value;
-        }
-    }
-
-    return items;
-}
-
 }

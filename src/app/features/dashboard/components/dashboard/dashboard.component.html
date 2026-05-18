@@ -1,10 +1,78 @@
-<div class="welcome-container text-center d-flex flex-column justify-content-center align-items-center">
-    <img src="assets/images/amfy-logo-5.png" alt="Amfy Logo" class="welcome-logo mb-4" />
-    <h1 class="welcome-title">Hoş Geldiniz!</h1>
-    <p class="welcome-subtitle">Afet ile Mücadele ve Faal Yönetim Sistemi</p>
-    <div class="btn-group mt-4">
-      <a [routerLink]="['/map']" class="btn btn-outline-danger px-4 py-2">Haritaya Git</a>
-      <a routerLink="/reports" class="btn btn-outline-danger px-4 py-2">Raporları Gör</a>
+<div class="dashboard">
+  <div class="dashboard-hero">
+    <div class="hero-text">
+      <h2>Merhaba, {{ authService.currentProfile?.full_name }}</h2>
+      <p>Deprem analiz ve yönetim sistemine hoş geldiniz.</p>
+      <div class="hero-actions">
+        <a routerLink="/buildings" class="btn-primary">+ Bina Ekle</a>
+        <a routerLink="/map" class="btn-outline">Haritayı Aç</a>
+      </div>
+    </div>
+    <img src="assets/images/build-2.png" alt="Buildings" class="hero-img" />
+  </div>
+
+  <div class="loading-bar" *ngIf="loading">
+    <div class="loading-inner"></div>
+  </div>
+
+  <div class="stats-grid" *ngIf="!loading">
+    <div class="stat-card green">
+      <span class="material-icons stat-icon">check_circle</span>
+      <div class="stat-body">
+        <div class="stat-number">{{ standingCount }}</div>
+        <div class="stat-label">Ayakta</div>
+      </div>
+    </div>
+    <div class="stat-card orange">
+      <span class="material-icons stat-icon">warning</span>
+      <div class="stat-body">
+        <div class="stat-number">{{ damagedCount }}</div>
+        <div class="stat-label">Hasarlı</div>
+      </div>
+    </div>
+    <div class="stat-card red">
+      <span class="material-icons stat-icon">dangerous</span>
+      <div class="stat-body">
+        <div class="stat-number">{{ destroyedCount }}</div>
+        <div class="stat-label">Yıkık</div>
+      </div>
+    </div>
+    <div class="stat-card blue">
+      <span class="material-icons stat-icon">groups</span>
+      <div class="stat-body">
+        <div class="stat-number">{{ totalOccupancy }}</div>
+        <div class="stat-label">Binalardaki Kişi</div>
+      </div>
+    </div>
+    <div class="stat-card gray">
+      <span class="material-icons stat-icon">apartment</span>
+      <div class="stat-body">
+        <div class="stat-number">{{ buildings.length }}</div>
+        <div class="stat-label">Toplam Bina</div>
+      </div>
     </div>
   </div>
-  
+
+  <div class="quick-links" *ngIf="!loading">
+    <a routerLink="/map" class="quick-card">
+      <span class="material-icons qc-icon">map</span>
+      <span class="qc-label">Harita</span>
+      <span class="qc-desc">Anlık bina durumu</span>
+    </a>
+    <a routerLink="/buildings" class="quick-card">
+      <span class="material-icons qc-icon">apartment</span>
+      <span class="qc-label">Binalar</span>
+      <span class="qc-desc">Bina listesi ve ekle</span>
+    </a>
+    <a routerLink="/chat" class="quick-card">
+      <span class="material-icons qc-icon">chat</span>
+      <span class="qc-label">Mesajlar</span>
+      <span class="qc-desc">Anlık iletişim</span>
+    </a>
+    <a routerLink="/admin" class="quick-card admin-card" *ngIf="authService.isAdmin">
+      <span class="material-icons qc-icon">admin_panel_settings</span>
+      <span class="qc-label">Admin Panel</span>
+      <span class="qc-desc">Simülasyon ve raporlar</span>
+    </a>
+  </div>
+</div>

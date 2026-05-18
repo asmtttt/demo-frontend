@@ -1,0 +1,57 @@
+<div class="form-card">
+  <h3>Yeni Bina Ekle</h3>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <div class="field-group">
+        <label>Bina Adı *</label>
+        <input type="text" formControlName="name" placeholder="Örn: Merkez Bina" />
+      </div>
+      <div class="field-group">
+        <label>Adres</label>
+        <input type="text" formControlName="address" placeholder="Cadde, Sokak No" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="field-group">
+        <label>Şehir</label>
+        <input type="text" formControlName="city" placeholder="İstanbul" />
+      </div>
+      <div class="field-group">
+        <label>İlçe</label>
+        <input type="text" formControlName="district" placeholder="Kadıköy" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="field-group">
+        <label>Enlem (Lat) *</label>
+        <input type="number" formControlName="lat" placeholder="41.0082" step="0.0001" />
+      </div>
+      <div class="field-group">
+        <label>Boylam (Lng) *</label>
+        <input type="number" formControlName="lng" placeholder="28.9784" step="0.0001" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="field-group">
+        <label>İnşaat Yılı</label>
+        <input type="number" formControlName="construction_year" placeholder="2005" />
+      </div>
+      <div class="field-group">
+        <label>Kat Sayısı</label>
+        <input type="number" formControlName="floor_count" placeholder="5" />
+      </div>
+    </div>
+    <div class="field-group">
+      <label>Yapı Tipi</label>
+      <select formControlName="building_type">
+        <option value="">Seçin</option>
+        <option *ngFor="let t of buildingTypes" [value]="t">{{ t }}</option>
+      </select>
+    </div>
+
+    <div class="alert-error" *ngIf="errorMessage">{{ errorMessage }}</div>
+    <button type="submit" [disabled]="loading" class="btn-submit">
+      {{ loading ? 'Kaydediliyor...' : 'Bina Ekle' }}
+    </button>
+  </form>
+</div>
