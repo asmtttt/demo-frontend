@@ -16,8 +16,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   buildings: Building[] = [];
   selectedBuilding: Building | null = null;
-  filterCity = '';
   filterDistrict = '';
+  filterStatus = '';
+  sidebarOpen = false;
 
   constructor(private buildingService: BuildingService, public authService: AuthService) {}
 
@@ -31,7 +32,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private initMap() {
-    this.map = L.map('map', { center: [39.9334, 32.8597], zoom: 6 });
+    this.map = L.map('map', { center: [41.015, 28.979], zoom: 10 });
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap'
     }).addTo(this.map);
@@ -44,16 +45,23 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       : await this.buildingService.getMyBuildings();
   }
 
+  get districts(): string[] {
+    const set = new Set(this.buildings.map(b => b.district).filter(Boolean) as string[]);
+    return Array.from(set).sort((a, b) => a.localeCompare(b, 'tr'));
+  }
+
+  get filteredBuildings(): Building[] {
+    return this.buildings.filter(b =>
+      (!this.filterDistrict || b.district === this.filterDistrict) &&
+      (!this.filterStatus  || b.status   === this.filterStatus)
+    );
+  }
+
   private renderMarkers() {
     this.markers.forEach(m => m.remove());
     this.markers.clear();
 
-    const filtered = this.buildings.filter(b =>
-      (!this.filterCity || b.city?.toLowerCase().includes(this.filterCity.toLowerCase())) &&
-      (!this.filterDistrict || b.district?.toLowerCase().includes(this.filterDistrict.toLowerCase()))
-    );
-
-    filtered.forEach(b => {
+    this.filteredBuildings.forEach(b => {
       const color = b.status === 'standing' ? '#27ae60' : b.status === 'damaged' ? '#e67e22' : '#e74c3c';
       const icon = L.divIcon({
         className: '',
@@ -64,7 +72,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
       const marker = L.marker([b.lat, b.lng], { icon })
         .addTo(this.map)
-        .on('click', () => this.selectedBuilding = b);
+        .on('click', () => {
+          this.selectedBuilding = b;
+          this.sidebarOpen = false;
+        });
 
       this.markers.set(b.id, marker);
     });
@@ -85,15 +96,22 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   applyFilter() {
     this.renderMarkers();
+    this.sidebarOpen = false;
+  }
+
+  resetFilters() {
+    this.filterDistrict = '';
+    this.filterStatus = '';
+    this.renderMarkers();
   }
 
   closePanel() {
     this.selectedBuilding = null;
   }
 
-  get standingCount()  { return this.buildings.filter(b => b.status === 'standing').length; }
-  get damagedCount()   { return this.buildings.filter(b => b.status === 'damaged').length; }
-  get destroyedCount() { return this.buildings.filter(b => b.status === 'destroyed').length; }
+  get standingCount()  { return this.filteredBuildings.filter(b => b.status === 'standing').length; }
+  get damagedCount()   { return this.filteredBuildings.filter(b => b.status === 'damaged').length; }
+  get destroyedCount() { return this.filteredBuildings.filter(b => b.status === 'destroyed').length; }
 
   statusLabel(s: string) {
     return s === 'standing' ? 'Ayakta' : s === 'damaged' ? 'Hasarlı' : 'Yıkık';

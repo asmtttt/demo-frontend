@@ -1,0 +1,19 @@
+<div class="confirm-overlay" *ngIf="confirmService.options" (click)="confirmService.resolve(false)">
+  <div class="confirm-box" (click)="$event.stopPropagation()">
+    <div class="confirm-icon" [class.danger]="confirmService.options.danger">
+      <span class="material-icons">
+        {{ confirmService.options.danger ? 'delete_forever' : 'help_outline' }}
+      </span>
+    </div>
+    <h3 class="confirm-title">{{ confirmService.options.title }}</h3>
+    <p class="confirm-message">{{ confirmService.options.message }}</p>
+    <div class="confirm-actions">
+      <button class="btn-cancel" (click)="confirmService.resolve(false)">
+        {{ confirmService.options.cancelText || 'Vazgeç' }}
+      </button>
+      <button class="btn-confirm" [class.danger]="confirmService.options.danger" (click)="confirmService.resolve(true)">
+        {{ confirmService.options.confirmText || 'Onayla' }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -4,7 +4,7 @@
       <h2>Merhaba, {{ authService.currentProfile?.full_name }}</h2>
       <p>Deprem analiz ve yönetim sistemine hoş geldiniz.</p>
       <div class="hero-actions">
-        <a routerLink="/buildings" class="btn-primary">+ Bina Ekle</a>
+        <a routerLink="/buildings" [queryParams]="{add: '1'}" class="btn-primary">+ Bina Ekle</a>
         <a routerLink="/map" class="btn-outline">Haritayı Aç</a>
       </div>
     </div>

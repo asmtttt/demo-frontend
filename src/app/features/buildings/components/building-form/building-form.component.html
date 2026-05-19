@@ -50,8 +50,15 @@
     </div>
 
     <div class="alert-error" *ngIf="errorMessage">{{ errorMessage }}</div>
-    <button type="submit" [disabled]="loading" class="btn-submit">
-      {{ loading ? 'Kaydediliyor...' : 'Bina Ekle' }}
-    </button>
+
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="onCancel()">
+        <span class="material-icons">close</span> İptal
+      </button>
+      <button type="submit" [disabled]="loading" class="btn-submit">
+        <span class="material-icons">save</span>
+        {{ loading ? 'Kaydediliyor...' : 'Kaydet' }}
+      </button>
+    </div>
   </form>
 </div>

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { BuildingService } from 'src/app/core/services/building.service';
+import { ConfirmService } from 'src/app/shared/services/confirm.service';
 
 @Component({
   selector: 'app-building-form',
@@ -10,6 +11,7 @@ import { BuildingService } from 'src/app/core/services/building.service';
 })
 export class BuildingFormComponent {
   @Output() saved = new EventEmitter<void>();
+  @Output() cancelled = new EventEmitter<void>();
 
   form = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -28,7 +30,11 @@ export class BuildingFormComponent {
 
   buildingTypes = ['betonarme', 'yigma', 'celik', 'ahsap', 'diger'];
 
-  constructor(private buildingService: BuildingService, private authService: AuthService) {}
+  constructor(
+    private buildingService: BuildingService,
+    private authService: AuthService,
+    private confirmService: ConfirmService
+  ) {}
 
   async onSubmit() {
     if (this.form.invalid) return;
@@ -49,5 +55,19 @@ export class BuildingFormComponent {
     } else {
       this.saved.emit();
     }
+  }
+
+  async onCancel() {
+    if (this.form.dirty) {
+      const confirmed = await this.confirmService.confirm({
+        title: 'Formu Kapat',
+        message: 'Girdiğiniz bilgiler kaydedilmeyecek. Formu kapatmak istediğinize emin misiniz?',
+        confirmText: 'Evet, Kapat',
+        cancelText: 'Devam Et',
+        danger: false
+      });
+      if (!confirmed) return;
+    }
+    this.cancelled.emit();
   }
 }

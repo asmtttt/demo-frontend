@@ -12,7 +12,26 @@ h3 { font-size: 16px; font-weight: 700; color: var(--text); margin: 0 0 20px; }
 .field-group input:focus, .field-group select:focus { outline: none; border-color: var(--red); background: var(--bg-hover); }
 .field-group select option { background: var(--bg-raised); color: var(--text); }
 .alert-error { background: rgba(231,76,60,0.12); border: 1px solid rgba(231,76,60,0.3); color: #ff6b5b; border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-bottom: 16px; }
-.btn-submit { background: var(--red); color: #fff; border: none; padding: 11px 24px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+
+.form-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 4px; }
+
+.btn-cancel {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--bg-raised); color: var(--text-dim);
+  border: 1px solid var(--border); padding: 11px 20px;
+  border-radius: 8px; font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-cancel .material-icons { font-size: 16px; }
+.btn-cancel:hover { background: var(--bg-hover); color: var(--text); }
+
+.btn-submit {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--red); color: #fff; border: none;
+  padding: 11px 24px; border-radius: 8px; font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: background 0.2s;
+}
+.btn-submit .material-icons { font-size: 16px; }
 .btn-submit:hover:not(:disabled) { background: var(--red-dark); }
 .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
 

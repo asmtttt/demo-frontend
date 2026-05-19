@@ -10,7 +10,7 @@
     </button>
   </div>
 
-  <app-building-form *ngIf="showForm" (saved)="onFormSaved()"></app-building-form>
+  <app-building-form *ngIf="showForm" (saved)="onFormSaved()" (cancelled)="onFormCancelled()"></app-building-form>
 
   <div class="loading" *ngIf="loading">
     <span class="material-icons spin">refresh</span> Yükleniyor...
@@ -38,7 +38,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let b of buildings">
+        <tr *ngFor="let b of pagedBuildings">
           <td>
             <div class="building-name">{{ b.name }}</div>
             <div class="building-sub hide-lg">{{ b.city }}{{ b.district ? ' / ' + b.district : '' }}</div>
@@ -65,12 +65,29 @@
           <td><span class="badge" [ngClass]="statusClass(b.status)">{{ statusLabel(b.status) }}</span></td>
           <td *ngIf="authService.isAdmin" class="hide-sm">{{ b.profiles?.full_name }}</td>
           <td>
-            <button (click)="deleteBuilding(b.id)" class="btn-delete" title="Sil">
+            <button (click)="deleteBuilding(b.id, b.name)" class="btn-delete" title="Sil">
               <span class="material-icons">delete</span>
             </button>
           </td>
         </tr>
       </tbody>
     </table>
+
+    <!-- Pagination -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button class="pg-btn" (click)="prevPage()" [disabled]="currentPage === 0">
+        <span class="material-icons">chevron_left</span>
+      </button>
+      <button class="pg-btn pg-num"
+              *ngFor="let p of pages"
+              [class.active]="p === currentPage"
+              (click)="goToPage(p)">
+        {{ p + 1 }}
+      </button>
+      <button class="pg-btn" (click)="nextPage()" [disabled]="currentPage === totalPages - 1">
+        <span class="material-icons">chevron_right</span>
+      </button>
+      <span class="pg-info">{{ currentPage * pageSize + 1 }}–{{ min((currentPage + 1) * pageSize, buildings.length) }} / {{ buildings.length }}</span>
+    </div>
   </div>
 </div>

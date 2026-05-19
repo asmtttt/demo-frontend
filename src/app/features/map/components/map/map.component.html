@@ -1,9 +1,22 @@
 <div class="map-page">
 
+  <!-- Mobile filter toggle button -->
+  <button class="filter-fab" (click)="sidebarOpen = !sidebarOpen">
+    <span class="material-icons">tune</span>
+    <span>Filtrele</span>
+    <span class="active-badge" *ngIf="filterDistrict || filterStatus">●</span>
+  </button>
+
   <!-- Sol: Filtre sidebar -->
-  <div class="map-sidebar">
-    <div class="sidebar-section">
+  <div class="map-sidebar" [class.open]="sidebarOpen">
+    <div class="sidebar-header">
       <h3>Harita Filtresi</h3>
+      <button class="sidebar-close" (click)="sidebarOpen = false">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+
+    <div class="sidebar-section">
       <div class="legend">
         <div class="legend-item"><span class="dot green"></span> Ayakta</div>
         <div class="legend-item"><span class="dot orange"></span> Hasarlı</div>
@@ -13,38 +26,50 @@
 
     <div class="sidebar-section">
       <div class="filter-group">
-        <label>Şehir</label>
-        <input type="text" [(ngModel)]="filterCity" placeholder="İstanbul" />
-      </div>
-      <div class="filter-group">
         <label>İlçe</label>
-        <input type="text" [(ngModel)]="filterDistrict" placeholder="Kadıköy" />
+        <select [(ngModel)]="filterDistrict">
+          <option value="">Tüm İlçeler</option>
+          <option *ngFor="let d of districts" [value]="d">{{ d }}</option>
+        </select>
       </div>
-      <button (click)="applyFilter()" class="btn-filter">
-        <span class="material-icons">search</span> Filtrele
-      </button>
+
+      <div class="filter-group">
+        <label>Durum</label>
+        <div class="status-chips">
+          <button class="chip" [class.active]="filterStatus === ''" (click)="filterStatus = ''">Tümü</button>
+          <button class="chip green" [class.active]="filterStatus === 'standing'" (click)="filterStatus = 'standing'">Ayakta</button>
+          <button class="chip orange" [class.active]="filterStatus === 'damaged'" (click)="filterStatus = 'damaged'">Hasarlı</button>
+          <button class="chip red" [class.active]="filterStatus === 'destroyed'" (click)="filterStatus = 'destroyed'">Yıkık</button>
+        </div>
+      </div>
+
+      <div class="filter-actions">
+        <button (click)="applyFilter()" class="btn-filter">
+          <span class="material-icons">search</span> Uygula
+        </button>
+        <button (click)="resetFilters()" class="btn-reset" *ngIf="filterDistrict || filterStatus">
+          <span class="material-icons">clear</span>
+        </button>
+      </div>
     </div>
 
-    <div class="sidebar-section stats-mini" *ngIf="buildings.length > 0">
-      <div class="mini-stat">
-        <span class="dot green"></span>
-        <span>{{ standingCount }} Ayakta</span>
-      </div>
-      <div class="mini-stat">
-        <span class="dot orange"></span>
-        <span>{{ damagedCount }} Hasarlı</span>
-      </div>
-      <div class="mini-stat">
-        <span class="dot red"></span>
-        <span>{{ destroyedCount }} Yıkık</span>
+    <div class="sidebar-section">
+      <div class="stats-mini">
+        <div class="mini-stat"><span class="dot green"></span><span>{{ standingCount }} Ayakta</span></div>
+        <div class="mini-stat"><span class="dot orange"></span><span>{{ damagedCount }} Hasarlı</span></div>
+        <div class="mini-stat"><span class="dot red"></span><span>{{ destroyedCount }} Yıkık</span></div>
+        <div class="mini-stat total"><span class="material-icons" style="font-size:10px">apartment</span><span>{{ filteredBuildings.length }} / {{ buildings.length }}</span></div>
       </div>
     </div>
   </div>
 
-  <!-- Orta: Harita -->
+  <!-- Sidebar overlay (mobile) -->
+  <div class="sidebar-overlay" *ngIf="sidebarOpen" (click)="sidebarOpen = false"></div>
+
+  <!-- Harita -->
   <div id="map"></div>
 
-  <!-- Sağ: Bina detay panel (bina tıklanınca açılır) -->
+  <!-- Sağ: Bina detay panel -->
   <div class="building-detail-panel" [class.open]="selectedBuilding">
     <ng-container *ngIf="selectedBuilding">
       <div class="detail-header">
@@ -80,31 +105,19 @@
       <div class="detail-grid">
         <div class="detail-item">
           <span class="material-icons">people</span>
-          <div>
-            <div class="di-label">Anlık Kişi</div>
-            <div class="di-value">{{ selectedBuilding.current_occupancy }}</div>
-          </div>
+          <div><div class="di-label">Anlık Kişi</div><div class="di-value">{{ selectedBuilding.current_occupancy }}</div></div>
         </div>
         <div class="detail-item">
           <span class="material-icons">layers</span>
-          <div>
-            <div class="di-label">Kat Sayısı</div>
-            <div class="di-value">{{ selectedBuilding.floor_count ?? '-' }}</div>
-          </div>
+          <div><div class="di-label">Kat Sayısı</div><div class="di-value">{{ selectedBuilding.floor_count ?? '-' }}</div></div>
         </div>
         <div class="detail-item">
           <span class="material-icons">foundation</span>
-          <div>
-            <div class="di-label">Yapı Tipi</div>
-            <div class="di-value">{{ selectedBuilding.building_type ?? '-' }}</div>
-          </div>
+          <div><div class="di-label">Yapı Tipi</div><div class="di-value">{{ selectedBuilding.building_type ?? '-' }}</div></div>
         </div>
         <div class="detail-item">
           <span class="material-icons">calendar_today</span>
-          <div>
-            <div class="di-label">İnşaat Yılı</div>
-            <div class="di-value">{{ selectedBuilding.construction_year ?? '-' }}</div>
-          </div>
+          <div><div class="di-label">İnşaat Yılı</div><div class="di-value">{{ selectedBuilding.construction_year ?? '-' }}</div></div>
         </div>
       </div>
 
@@ -130,7 +143,5 @@
     </ng-container>
   </div>
 
-  <!-- Overlay (mobilde sağ panel açıkken) -->
   <div class="panel-overlay" *ngIf="selectedBuilding" (click)="closePanel()"></div>
-
 </div>
